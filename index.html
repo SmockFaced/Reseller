@@ -8,51 +8,19 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-        
-        body {
-            font-family: 'Inter', system-ui, sans-serif;
-            background: #000;
-            color: white;
-        }
-        
-        .glow {
-            text-shadow: 0 0 20px #fff,
-                        0 0 40px #fff,
-                        0 0 80px #a5b4fc;
-        }
-        
-        .glass {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-        }
-        
-        .nav-link {
-            transition: all 0.3s ease;
-        }
-        
-        .nav-link:hover {
-            color: #ddd;
-            text-shadow: 0 0 8px #fff;
-        }
-        
-        .card {
-            transition: all 0.4s ease;
-        }
-        
-        .card:hover {
-            transform: translateY(-4px);
-            border-color: rgba(255, 255, 255, 0.2);
-        }
-        
-        .accent {
-            background: linear-gradient(90deg, #fff, #ccc);
-        }
+        body { font-family: 'Inter', system-ui, sans-serif; background: #000; color: white; }
+        .glass { background: rgba(255,255,255,0.03); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.08); }
+        .glow { text-shadow: 0 0 20px #fff, 0 0 40px #fff; }
+        .nav-link { transition: all 0.3s ease; }
+        .nav-link:hover { color: #ddd; }
+        .card { transition: all 0.4s ease; }
+        .card:hover { transform: translateY(-4px); }
+        .accent { background: linear-gradient(90deg, #fff, #ccc); }
     </style>
 </head>
 <body class="text-white min-h-screen">
 
-    <!-- LOGIN PAGE -->
+    <!-- ==================== LOGIN PAGE ==================== -->
     <div id="login-page" class="min-h-screen flex items-center justify-center">
         <div class="w-full max-w-md px-8">
             <div class="text-center mb-10">
@@ -71,29 +39,49 @@
                 <div class="space-y-6">
                     <div>
                         <label class="block text-sm text-white/70 mb-2">Username</label>
-                        <input id="username" type="text" value="smockfaced" 
-                               class="w-full bg-black border border-white/20 focus:border-white rounded-2xl px-6 py-4 outline-none">
+                        <input id="username" type="text" value="smockfaced" class="w-full bg-black border border-white/20 focus:border-white rounded-2xl px-6 py-4 outline-none">
                     </div>
-                    
                     <div>
                         <label class="block text-sm text-white/70 mb-2">Password</label>
-                        <input id="password" type="password" value="demo" 
-                               class="w-full bg-black border border-white/20 focus:border-white rounded-2xl px-6 py-4 outline-none">
+                        <input id="password" type="password" value="demo" class="w-full bg-black border border-white/20 focus:border-white rounded-2xl px-6 py-4 outline-none">
                     </div>
-
-                    <button onclick="login()" 
-                            class="accent w-full py-4 rounded-2xl text-xl font-semibold text-black mt-4">
-                        Login
-                    </button>
+                    <button onclick="login()" class="accent w-full py-4 rounded-2xl text-xl font-semibold text-black">Login</button>
                 </div>
-                
-                <p class="text-center text-xs text-white/50 mt-6">Demo: Use any username + password</p>
+
+                <div class="mt-6 text-center">
+                    <button onclick="showAdminLogin()" class="text-sm text-white/60 hover:text-white underline">Login as Admin</button>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- CONTROL PANEL (Hidden until logged in) -->
-    <div id="control-panel" class="hidden min-h-screen">
+    <!-- ==================== ADMIN LOGIN ==================== -->
+    <div id="admin-login-page" class="hidden min-h-screen flex items-center justify-center">
+        <div class="w-full max-w-md px-8">
+            <div class="text-center mb-10">
+                <h1 class="text-4xl font-semibold">Admin Access</h1>
+                <p class="text-white/60 mt-2">Zerox Reseller Panel</p>
+            </div>
+
+            <div class="glass border border-white/10 rounded-3xl p-10">
+                <div class="space-y-6">
+                    <div>
+                        <label class="block text-sm text-white/70 mb-2">Admin Username</label>
+                        <input id="admin-username" type="text" value="admin" class="w-full bg-black border border-white/20 focus:border-white rounded-2xl px-6 py-4 outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-sm text-white/70 mb-2">Admin Password</label>
+                        <input id="admin-password" type="password" value="admin123" class="w-full bg-black border border-white/20 focus:border-white rounded-2xl px-6 py-4 outline-none">
+                    </div>
+                    <button onclick="adminLogin()" class="accent w-full py-4 rounded-2xl text-xl font-semibold text-black">Login as Admin</button>
+                    <button onclick="showUserLogin()" class="w-full py-3 text-sm text-white/60 hover:text-white">Back to User Login</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== USER CONTROL PANEL ==================== -->
+    <div id="user-panel" class="hidden min-h-screen">
         <div class="flex h-screen overflow-hidden">
             <!-- Sidebar -->
             <div class="w-72 bg-black border-r border-white/10 flex flex-col">
@@ -104,30 +92,12 @@
                         </div>
                         <span class="text-4xl font-semibold tracking-tighter glow">Zerox</span>
                     </div>
-                    <div class="text-xs text-white/40 mt-1">Premium Tools Platform</div>
                 </div>
                 
                 <div class="flex-1 px-6 py-8 space-y-2">
-                    <a onclick="switchPage('dashboard')" id="nav-dashboard" class="nav-link flex items-center gap-3 px-5 py-4 rounded-2xl text-white bg-white/10">
-                        <i class="fas fa-home w-5"></i>
-                        <span class="font-medium">Dashboard</span>
-                    </a>
-                    <a onclick="switchPage('store')" id="nav-store" class="nav-link flex items-center gap-3 px-5 py-4 rounded-2xl hover:bg-white/5">
-                        <i class="fas fa-store w-5"></i>
-                        <span class="font-medium">Store</span>
-                    </a>
-                    <a onclick="switchPage('generate')" id="nav-generate" class="nav-link flex items-center gap-3 px-5 py-4 rounded-2xl hover:bg-white/5">
-                        <i class="fas fa-key w-5"></i>
-                        <span class="font-medium">Generate Keys</span>
-                    </a>
-                    <a href="#" class="nav-link flex items-center gap-3 px-5 py-4 rounded-2xl hover:bg-white/5">
-                        <i class="fas fa-history w-5"></i>
-                        <span class="font-medium">Orders</span>
-                    </a>
-                    <a href="#" class="nav-link flex items-center gap-3 px-5 py-4 rounded-2xl hover:bg-white/5">
-                        <i class="fas fa-cog w-5"></i>
-                        <span class="font-medium">Settings</span>
-                    </a>
+                    <a onclick="switchUserPage('dashboard')" class="nav-link flex items-center gap-3 px-5 py-4 rounded-2xl hover:bg-white/5">Dashboard</a>
+                    <a onclick="switchUserPage('store')" class="nav-link flex items-center gap-3 px-5 py-4 rounded-2xl hover:bg-white/5">Store</a>
+                    <a onclick="switchUserPage('generate')" class="nav-link flex items-center gap-3 px-5 py-4 rounded-2xl hover:bg-white/5">Generate Keys</a>
                 </div>
                 
                 <div class="p-6 border-t border-white/10">
@@ -135,118 +105,103 @@
                 </div>
             </div>
 
-            <!-- Main Content -->
             <div class="flex-1 flex flex-col">
-                <!-- Top Bar -->
                 <div class="h-16 bg-black border-b border-white/10 flex items-center px-8 justify-between">
-                    <div class="flex items-center gap-8">
-                        <div class="text-sm font-medium text-white/70">Welcome back, <span id="username-display">smockfaced</span></div>
-                    </div>
-                    <div class="flex items-center gap-6">
-                        <div class="flex items-center gap-2 bg-white/5 px-5 py-2 rounded-2xl">
-                            <span class="font-semibold">Credits: <span id="top-credits">0</span> ₡</span>
+                    <div>Welcome back, <span id="user-username"></span></div>
+                    <div>Credits: <span id="user-credits">0</span> ₡</div>
+                </div>
+
+                <!-- User Dashboard Content -->
+                <div id="user-dashboard" class="flex-1 p-10 overflow-auto">
+                    <!-- Content will be injected by JS -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== ADMIN DASHBOARD ==================== -->
+    <div id="admin-panel" class="hidden min-h-screen">
+        <div class="flex h-screen overflow-hidden">
+            <!-- Admin Sidebar -->
+            <div class="w-72 bg-black border-r border-white/10 flex flex-col">
+                <div class="p-8 border-b border-white/10">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-red-500 rounded-2xl flex items-center justify-center">
+                            <span class="text-white text-3xl font-bold">A</span>
                         </div>
+                        <span class="text-4xl font-semibold tracking-tighter">Admin</span>
+                    </div>
+                </div>
+                
+                <div class="flex-1 px-6 py-8 space-y-2 text-sm">
+                    <a onclick="showAdminSection('purchases')" class="block px-5 py-3 rounded-2xl hover:bg-white/5 cursor-pointer">Purchases / Logistics</a>
+                    <a onclick="showAdminSection('products')" class="block px-5 py-3 rounded-2xl hover:bg-white/5 cursor-pointer">Products</a>
+                    <a onclick="showAdminSection('users')" class="block px-5 py-3 rounded-2xl hover:bg-white/5 cursor-pointer">Users</a>
+                </div>
+                
+                <div class="p-6 border-t border-white/10">
+                    <button onclick="adminLogout()" class="w-full py-3 text-sm border border-white/30 hover:bg-white/5 rounded-2xl">Logout</button>
+                </div>
+            </div>
+
+            <!-- Admin Content Area -->
+            <div class="flex-1 p-10 overflow-auto">
+                <!-- Purchases -->
+                <div id="admin-purchases" class="admin-section">
+                    <h2 class="text-3xl font-semibold mb-8">Purchase Logistics</h2>
+                    <div class="glass border border-white/10 rounded-3xl p-8">
+                        <table class="w-full">
+                            <thead>
+                                <tr class="text-left text-white/60 border-b border-white/10">
+                                    <th class="py-4">User</th>
+                                    <th class="py-4">Product</th>
+                                    <th class="py-4">Amount</th>
+                                    <th class="py-4">Date</th>
+                                    <th class="py-4">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="purchases-table"></tbody>
+                        </table>
                     </div>
                 </div>
 
-                <!-- Dashboard -->
-                <div id="dashboard-page" class="flex-1 p-10 overflow-auto">
-                    <div class="max-w-7xl mx-auto">
-                        <h1 class="text-5xl font-semibold mb-2 glow">Dashboard</h1>
-                        <p class="text-white/50 mb-10">Overview • June 13, 2026</p>
-                        
-                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                            <div class="glass border border-white/10 rounded-3xl p-8 card col-span-2">
-                                <div class="flex justify-between items-start">
-                                    <div>
-                                        <div class="text-sm text-white/60">Available Credits</div>
-                                        <div class="text-6xl font-semibold mt-3" id="credits-display">0 ₡</div>
-                                    </div>
-                                    <button onclick="switchPage('store')" class="accent px-8 py-4 rounded-2xl font-semibold text-black flex items-center gap-3">
-                                        <i class="fas fa-plus"></i> Buy Credits
-                                    </button>
-                                </div>
-                            </div>
-                            
-                            <div class="glass border border-white/10 rounded-3xl p-8 card">
-                                <div class="text-sm text-white/60 mb-3">Keys Generated</div>
-                                <div class="text-6xl font-semibold">0</div>
-                                <button onclick="switchPage('generate')" class="mt-8 w-full py-4 border border-white text-white hover:bg-white hover:text-black rounded-2xl font-medium transition">
-                                    Generate New Keys
-                                </button>
-                            </div>
-                        </div>
-
-                        <div class="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-6">
-                            <div class="glass border border-white/10 rounded-3xl p-8 card">
-                                <h2 class="text-xl font-semibold mb-6 flex items-center gap-3">
-                                    <i class="fas fa-shield-alt"></i> Key Status Check
-                                </h2>
-                                <div class="flex gap-4">
-                                    <input id="key-input" type="text" placeholder="Enter product key..." 
-                                           class="flex-1 bg-black border border-white/20 focus:border-white rounded-2xl px-6 py-4 outline-none text-white">
-                                    <button onclick="checkKey()" class="px-10 bg-white text-black font-semibold rounded-2xl">Check</button>
-                                </div>
-                            </div>
-
-                            <div class="glass border border-white/10 rounded-3xl p-8 card">
-                                <h2 class="text-xl font-semibold mb-6">Recent Orders</h2>
-                                <div class="text-center py-16 text-white/40">No orders found</div>
-                            </div>
-                        </div>
+                <!-- Products Management -->
+                <div id="admin-products" class="admin-section hidden">
+                    <div class="flex justify-between items-center mb-8">
+                        <h2 class="text-3xl font-semibold">Products</h2>
+                        <button onclick="showAddProductModal()" class="accent px-6 py-3 rounded-2xl text-black font-semibold">+ Add Product</button>
+                    </div>
+                    <div class="glass border border-white/10 rounded-3xl p-8">
+                        <table class="w-full">
+                            <thead>
+                                <tr class="text-left text-white/60 border-b border-white/10">
+                                    <th class="py-4">Name</th>
+                                    <th class="py-4">Price</th>
+                                    <th class="py-4 w-40">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="products-table"></tbody>
+                        </table>
                     </div>
                 </div>
 
-                <!-- Store Page -->
-                <div id="store-page" class="flex-1 p-10 overflow-auto hidden">
-                    <div class="max-w-3xl mx-auto">
-                        <div class="glass border border-white/10 rounded-3xl p-16 text-center card">
-                            <div class="text-8xl mb-6">₡</div>
-                            <h2 class="text-5xl font-semibold mb-4">250 Credits</h2>
-                            <p class="text-white/60 text-lg mb-8">Initial purchase to unlock full features</p>
-                            <div class="text-6xl font-bold mb-12">$250</div>
-                            <button onclick="buyCredits()" class="accent w-full py-6 rounded-3xl text-xl font-semibold text-black flex items-center justify-center gap-3">
-                                Buy Credits <i class="fas fa-arrow-right"></i>
-                            </button>
-                        </div>
+                <!-- Users Management -->
+                <div id="admin-users" class="admin-section hidden">
+                    <div class="flex justify-between items-center mb-8">
+                        <h2 class="text-3xl font-semibold">Users</h2>
+                        <button onclick="showAddUserModal()" class="accent px-6 py-3 rounded-2xl text-black font-semibold">+ Add User</button>
                     </div>
-                </div>
-
-                <!-- Generate Page -->
-                <div id="generate-page" class="flex-1 p-10 overflow-auto hidden">
-                    <div class="max-w-5xl mx-auto">
-                        <div class="glass border border-white/10 rounded-3xl p-10 card">
-                            <input id="search-products" type="text" placeholder="Search products..." onkeyup="filterProducts()"
-                                   class="w-full bg-black border border-white/20 focus:border-white rounded-3xl px-6 py-5 text-lg mb-8 outline-none">
-                            
-                            <div id="products-list" class="grid grid-cols-1 md:grid-cols-2 gap-4 max-h-[420px] overflow-auto"></div>
-                            
-                            <div class="mt-12 pt-8 border-t border-white/10 flex items-end gap-8">
-                                <div class="flex-1">
-                                    <div class="text-sm text-white/60 mb-2">Quantity</div>
-                                    <div class="flex border border-white/20 rounded-3xl overflow-hidden">
-                                        <button onclick="changeQty(-1)" class="w-16 py-6 text-2xl hover:bg-white/10">-</button>
-                                        <input id="quantity" type="text" value="1" class="flex-1 text-center bg-transparent text-4xl font-semibold focus:outline-none">
-                                        <button onclick="changeQty(1)" class="w-16 py-6 text-2xl hover:bg-white/10">+</button>
-                                    </div>
-                                </div>
-                                <div class="flex-1">
-                                    <div class="text-sm text-white/60 mb-2">Total Cost</div>
-                                    <div id="total-cost" class="text-5xl font-semibold">4 ₡</div>
-                                </div>
-                                <button onclick="generateKeys()" class="flex-1 py-7 accent text-black font-semibold text-xl rounded-3xl">
-                                    Generate Keys
-                                </button>
-                            </div>
-                        </div>
-
-                        <!-- Generated Keys -->
-                        <div class="max-w-5xl mx-auto mt-8">
-                            <div class="glass border border-white/10 rounded-3xl p-8">
-                                <h3 class="font-semibold mb-4">Your Generated Keys</h3>
-                                <div id="generated-keys-list" class="space-y-2 text-sm"></div>
-                            </div>
-                        </div>
+                    <div class="glass border border-white/10 rounded-3xl p-8">
+                        <table class="w-full">
+                            <thead>
+                                <tr class="text-left text-white/60 border-b border-white/10">
+                                    <th class="py-4">Username</th>
+                                    <th class="py-4">Password</th>
+                                    <th class="py-4 w-48">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="users-table"></tbody>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -254,175 +209,216 @@
     </div>
 
     <script>
-        // ==================== LOGIN SYSTEM ====================
-        function login() {
-            const username = document.getElementById('username').value || 'user';
-            localStorage.setItem('zerox_logged_in', 'true');
-            localStorage.setItem('zerox_username', username);
-            
-            document.getElementById('login-page').classList.add('hidden');
-            document.getElementById('control-panel').classList.remove('hidden');
-            
-            document.getElementById('username-display').textContent = username;
-            updateCreditsDisplay();
-            renderGeneratedKeys();
+        // ==================== DATA ====================
+        let products = JSON.parse(localStorage.getItem('admin_products')) || [
+            {id: 1, name: "Rogue Company Day", price: 2.50},
+            {id: 2, name: "Rogue Company Week", price: 7.50},
+            {id: 3, name: "HWID Spoofer Month", price: 10}
+        ];
+
+        let users = JSON.parse(localStorage.getItem('admin_users')) || [
+            {id: 1, username: "smockfaced", password: "demo"},
+            {id: 2, username: "testuser", password: "1234"}
+        ];
+
+        let purchases = JSON.parse(localStorage.getItem('admin_purchases')) || [
+            {id: 1, user: "smockfaced", product: "Rogue Company Month", amount: 15, date: "2026-06-10", status: "Completed"},
+            {id: 2, user: "testuser", product: "HWID Spoofer Week", amount: 5, date: "2026-06-11", status: "Completed"}
+        ];
+
+        function saveData() {
+            localStorage.setItem('admin_products', JSON.stringify(products));
+            localStorage.setItem('admin_users', JSON.stringify(users));
+            localStorage.setItem('admin_purchases', JSON.stringify(purchases));
         }
 
-        function checkLogin() {
-            if (localStorage.getItem('zerox_logged_in') === 'true') {
-                const username = localStorage.getItem('zerox_username') || 'user';
-                document.getElementById('login-page').classList.add('hidden');
-                document.getElementById('control-panel').classList.remove('hidden');
-                document.getElementById('username-display').textContent = username;
-                updateCreditsDisplay();
-                renderGeneratedKeys();
+        // ==================== LOGIN ====================
+        function login() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            const user = users.find(u => u.username === username && u.password === password);
+            if (user) {
+                localStorage.setItem('logged_in_user', username);
+                showUserPanel(username);
+            } else {
+                alert("Invalid credentials");
             }
         }
 
-        function logout() {
-            localStorage.removeItem('zerox_logged_in');
+        function showAdminLogin() {
+            document.getElementById('login-page').classList.add('hidden');
+            document.getElementById('admin-login-page').classList.remove('hidden');
+        }
+
+        function showUserLogin() {
+            document.getElementById('admin-login-page').classList.add('hidden');
+            document.getElementById('login-page').classList.remove('hidden');
+        }
+
+        function adminLogin() {
+            const username = document.getElementById('admin-username').value;
+            const password = document.getElementById('admin-password').value;
+
+            if (username === "admin" && password === "admin123") {
+                localStorage.setItem('admin_logged_in', 'true');
+                document.getElementById('admin-login-page').classList.add('hidden');
+                document.getElementById('admin-panel').classList.remove('hidden');
+                showAdminSection('purchases');
+            } else {
+                alert("Invalid admin credentials");
+            }
+        }
+
+        function adminLogout() {
+            localStorage.removeItem('admin_logged_in');
             window.location.reload();
         }
 
-        // ==================== CREDITS ====================
-        let credits = parseInt(localStorage.getItem('zerox_credits')) || 0;
-
-        function updateCreditsDisplay() {
-            document.getElementById('top-credits').textContent = credits;
-            const display = document.getElementById('credits-display');
-            if (display) display.textContent = credits + ' ₡';
+        function logout() {
+            localStorage.removeItem('logged_in_user');
+            window.location.reload();
         }
 
-        function saveCredits() {
-            localStorage.setItem('zerox_credits', credits);
-            updateCreditsDisplay();
+        function showUserPanel(username) {
+            document.getElementById('login-page').classList.add('hidden');
+            document.getElementById('user-panel').classList.remove('hidden');
+            document.getElementById('user-username').textContent = username;
+            // Simple user dashboard content
+            document.getElementById('user-dashboard').innerHTML = `
+                <h1 class="text-4xl font-semibold mb-6">Welcome, ${username}</h1>
+                <p class="text-white/70">This is your user dashboard. You can buy credits and generate keys.</p>
+            `;
         }
 
-        // ==================== GENERATED KEYS ====================
-        let generatedKeys = JSON.parse(localStorage.getItem('zerox_keys')) || [];
+        // ==================== ADMIN SECTIONS ====================
+        function showAdminSection(section) {
+            document.querySelectorAll('.admin-section').forEach(el => el.classList.add('hidden'));
+            document.getElementById('admin-' + section).classList.remove('hidden');
 
-        function saveGeneratedKeys() {
-            localStorage.setItem('zerox_keys', JSON.stringify(generatedKeys));
-            renderGeneratedKeys();
+            if (section === 'purchases') renderPurchases();
+            if (section === 'products') renderProductsTable();
+            if (section === 'users') renderUsersTable();
         }
 
-        function renderGeneratedKeys() {
-            const container = document.getElementById('generated-keys-list');
-            if (!container) return;
-            container.innerHTML = '';
-            if (generatedKeys.length === 0) {
-                container.innerHTML = '<div class="text-white/40">No keys generated yet</div>';
-                return;
-            }
-            generatedKeys.slice().reverse().forEach(key => {
-                const div = document.createElement('div');
-                div.className = 'flex justify-between items-center bg-black/50 p-3 rounded-xl';
-                div.innerHTML = `
-                    <div class="font-mono">${key}</div>
-                    <button onclick="copyKey('${key}', this)" class="px-4 py-1 text-xs border border-white/30 hover:bg-white/10 rounded">Copy</button>
+        function renderPurchases() {
+            const tbody = document.getElementById('purchases-table');
+            tbody.innerHTML = '';
+            purchases.forEach(p => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td class="py-4">${p.user}</td>
+                    <td class="py-4">${p.product}</td>
+                    <td class="py-4">$${p.amount}</td>
+                    <td class="py-4">${p.date}</td>
+                    <td class="py-4"><span class="px-3 py-1 bg-emerald-500/20 text-emerald-400 rounded-full text-xs">${p.status}</span></td>
                 `;
-                container.appendChild(div);
+                tbody.appendChild(row);
             });
         }
 
-        function copyKey(key, btn) {
-            navigator.clipboard.writeText(key).then(() => {
-                const original = btn.textContent;
-                btn.textContent = 'Copied!';
-                setTimeout(() => btn.textContent = original, 1500);
-            });
-        }
-
-        // ==================== ORIGINAL FUNCTIONS ====================
-        const products = [
-            {name: "Rogue Company Day", price: 2.50},
-            {name: "Rogue Company Week", price: 7.50},
-            {name: "Rogue Company Month", price: 15},
-            {name: "HWID Spoofer Day", price: 2},
-            {name: "HWID Spoofer Week", price: 5},
-            {name: "HWID Spoofer Month", price: 10},
-            {name: "Chess Month", price: 4},
-            {name: "Chess Year", price: 10},
-            {name: "HWID Spoofer Year", price: 30}
-        ];
-
-        let selectedProduct = products[0];
-
-        function renderProducts(filtered) {
-            const container = document.getElementById('products-list');
-            container.innerHTML = '';
-            filtered.forEach(p => {
-                const div = document.createElement('div');
-                div.className = 'glass border border-white/10 hover:border-white/30 p-6 rounded-3xl cursor-pointer card';
-                div.innerHTML = `
-                    <div class="flex justify-between">
-                        <div>${p.name}</div>
-                        <div class="font-semibold">${p.price} ₡</div>
-                    </div>
+        // ==================== PRODUCTS ====================
+        function renderProductsTable() {
+            const tbody = document.getElementById('products-table');
+            tbody.innerHTML = '';
+            products.forEach((p, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td class="py-4">${p.name}</td>
+                    <td class="py-4">$${p.price}</td>
+                    <td class="py-4">
+                        <button onclick="editProduct(${index})" class="text-blue-400 hover:underline mr-4">Edit</button>
+                        <button onclick="deleteProduct(${index})" class="text-red-400 hover:underline">Delete</button>
+                    </td>
                 `;
-                div.onclick = () => { selectedProduct = p; updateTotal(); };
-                container.appendChild(div);
+                tbody.appendChild(row);
             });
         }
 
-        function updateTotal() {
-            const qty = parseInt(document.getElementById('quantity').value) || 1;
-            document.getElementById('total-cost').textContent = (selectedProduct.price * qty).toFixed(2) + ' ₡';
-        }
-
-        function changeQty(d) {
-            let q = document.getElementById('quantity');
-            let v = Math.max(1, parseInt(q.value) + d);
-            q.value = v;
-            updateTotal();
-        }
-
-        function filterProducts() {
-            const term = document.getElementById('search-products').value.toLowerCase();
-            renderProducts(products.filter(p => p.name.toLowerCase().includes(term)));
-        }
-
-        function generateKeys() {
-            const qty = parseInt(document.getElementById('quantity').value) || 1;
-            const prefix = selectedProduct.name.replace(/\s+/g, '').substring(0, 6).toUpperCase();
-            
-            for (let i = 0; i < qty; i++) {
-                const key = `${prefix}-${Math.random().toString(36).substring(2, 10).toUpperCase()}-${Date.now().toString().slice(-6)}`;
-                generatedKeys.push(key);
+        function showAddProductModal() {
+            const name = prompt("Product Name:");
+            const price = parseFloat(prompt("Price:"));
+            if (name && price) {
+                products.push({id: Date.now(), name, price});
+                saveData();
+                renderProductsTable();
             }
-            saveGeneratedKeys();
-            alert(`✅ ${qty} key(s) generated successfully!`);
         }
 
-        function checkKey() {
-            const input = document.getElementById('key-input').value.trim();
-            if (input) alert("✅ Key is valid and active.");
+        function editProduct(index) {
+            const p = products[index];
+            const newName = prompt("New name:", p.name);
+            const newPrice = parseFloat(prompt("New price:", p.price));
+            if (newName && newPrice) {
+                products[index].name = newName;
+                products[index].price = newPrice;
+                saveData();
+                renderProductsTable();
+            }
         }
 
-        function buyCredits() {
-            credits += 250;
-            saveCredits();
-            alert("✅ 250 Credits added!");
-            switchPage('dashboard');
+        function deleteProduct(index) {
+            if (confirm("Delete this product?")) {
+                products.splice(index, 1);
+                saveData();
+                renderProductsTable();
+            }
         }
 
-        function switchPage(page) {
-            document.querySelectorAll('#dashboard-page, #store-page, #generate-page').forEach(el => el.classList.add('hidden'));
-            document.getElementById(page + '-page').classList.remove('hidden');
-            
-            document.querySelectorAll('#control-panel .nav-link').forEach(link => {
-                link.classList.remove('bg-white/10', 'text-white');
-                if (link.id === 'nav-' + page) {
-                    link.classList.add('bg-white/10', 'text-white');
-                }
+        // ==================== USERS ====================
+        function renderUsersTable() {
+            const tbody = document.getElementById('users-table');
+            tbody.innerHTML = '';
+            users.forEach((u, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td class="py-4">${u.username}</td>
+                    <td class="py-4">${u.password}</td>
+                    <td class="py-4">
+                        <button onclick="editUser(${index})" class="text-blue-400 hover:underline mr-4">Edit</button>
+                        <button onclick="deleteUser(${index})" class="text-red-400 hover:underline">Delete</button>
+                    </td>
+                `;
+                tbody.appendChild(row);
             });
+        }
+
+        function showAddUserModal() {
+            const username = prompt("New username:");
+            const password = prompt("Password:");
+            if (username && password) {
+                users.push({id: Date.now(), username, password});
+                saveData();
+                renderUsersTable();
+            }
+        }
+
+        function editUser(index) {
+            const u = users[index];
+            const newPass = prompt("New password:", u.password);
+            if (newPass) {
+                users[index].password = newPass;
+                saveData();
+                renderUsersTable();
+            }
+        }
+
+        function deleteUser(index) {
+            if (confirm("Delete this user?")) {
+                users.splice(index, 1);
+                saveData();
+                renderUsersTable();
+            }
         }
 
         // ==================== INIT ====================
         window.onload = () => {
-            checkLogin();
-            renderProducts(products);
-            document.getElementById('quantity').addEventListener('input', updateTotal);
+            // Auto login check for demo
+            if (localStorage.getItem('admin_logged_in') === 'true') {
+                document.getElementById('login-page').classList.add('hidden');
+                document.getElementById('admin-panel').classList.remove('hidden');
+                showAdminSection('purchases');
+            }
         };
     </script>
 </body>
