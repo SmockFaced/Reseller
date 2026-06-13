@@ -51,156 +51,201 @@
     </style>
 </head>
 <body class="text-white min-h-screen">
-    <div class="flex h-screen overflow-hidden">
-        <!-- Sidebar -->
-        <div class="w-72 bg-black border-r border-white/10 flex flex-col">
-            <div class="p-8 border-b border-white/10">
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 bg-white rounded-2xl flex items-center justify-center">
-                        <span class="text-black text-3xl font-bold">Z</span>
-                    </div>
-                    <span class="text-4xl font-semibold tracking-tighter glow">ZEROX</span>
-                </div>
-                <div class="text-xs text-white/40 mt-1">Premium Tools Platform</div>
-            </div>
-            
-            <div class="flex-1 px-6 py-8 space-y-2">
-                <a onclick="switchPage('dashboard')" id="nav-dashboard" class="nav-link flex items-center gap-3 px-5 py-4 rounded-2xl text-white bg-white/10">
-                    <i class="fas fa-home w-5"></i>
-                    <span class="font-medium">Dashboard</span>
-                </a>
-                <a onclick="switchPage('store')" id="nav-store" class="nav-link flex items-center gap-3 px-5 py-4 rounded-2xl hover:bg-white/5">
-                    <i class="fas fa-store w-5"></i>
-                    <span class="font-medium">Store</span>
-                </a>
-                <a onclick="switchPage('generate')" id="nav-generate" class="nav-link flex items-center gap-3 px-5 py-4 rounded-2xl hover:bg-white/5">
-                    <i class="fas fa-key w-5"></i>
-                    <span class="font-medium">Generate Keys</span>
-                </a>
-                <a href="#" class="nav-link flex items-center gap-3 px-5 py-4 rounded-2xl hover:bg-white/5">
-                    <i class="fas fa-history w-5"></i>
-                    <span class="font-medium">Orders</span>
-                </a>
-                <a href="#" class="nav-link flex items-center gap-3 px-5 py-4 rounded-2xl hover:bg-white/5">
-                    <i class="fas fa-cog w-5"></i>
-                    <span class="font-medium">Settings</span>
-                </a>
-            </div>
-            
-            <div class="p-6 border-t border-white/10">
-                <div class="flex items-center gap-3 bg-white/5 rounded-2xl p-4">
-                    <div class="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center font-semibold">SM</div>
-                    <div class="flex-1">
-                        <div class="font-medium">smockfaced</div>
-                        <div class="text-xs text-white/60">Online</div>
+
+    <!-- LOGIN PAGE -->
+    <div id="login-page" class="min-h-screen flex items-center justify-center">
+        <div class="w-full max-w-md px-8">
+            <div class="text-center mb-10">
+                <div class="flex justify-center mb-6">
+                    <div class="w-16 h-16 bg-white rounded-2xl flex items-center justify-center">
+                        <span class="text-black text-5xl font-bold">Z</span>
                     </div>
                 </div>
+                <h1 class="text-5xl font-semibold tracking-tighter glow">Zerox</h1>
+                <p class="text-white/60 mt-2">Reseller Control Panel</p>
+            </div>
+
+            <div class="glass border border-white/10 rounded-3xl p-10">
+                <h2 class="text-2xl font-semibold mb-8 text-center">Login</h2>
+                
+                <div class="space-y-6">
+                    <div>
+                        <label class="block text-sm text-white/70 mb-2">Username</label>
+                        <input id="username" type="text" value="smockfaced" 
+                               class="w-full bg-black border border-white/20 focus:border-white rounded-2xl px-6 py-4 outline-none">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm text-white/70 mb-2">Password</label>
+                        <input id="password" type="password" value="demo" 
+                               class="w-full bg-black border border-white/20 focus:border-white rounded-2xl px-6 py-4 outline-none">
+                    </div>
+
+                    <button onclick="login()" 
+                            class="accent w-full py-4 rounded-2xl text-xl font-semibold text-black mt-4">
+                        Login
+                    </button>
+                </div>
+                
+                <p class="text-center text-xs text-white/50 mt-6">Demo: Use any username + password</p>
             </div>
         </div>
+    </div>
 
-        <!-- Main Content -->
-        <div class="flex-1 flex flex-col">
-            <!-- Top Bar -->
-            <div class="h-16 bg-black border-b border-white/10 flex items-center px-8 justify-between">
-                <div class="flex items-center gap-8">
-                    <div class="text-sm font-medium text-white/70">Welcome back, smockfaced</div>
-                </div>
-                <div class="flex items-center gap-6">
-                    <div class="flex items-center gap-2 bg-white/5 px-5 py-2 rounded-2xl">
-                        <span class="font-semibold">Credits: <span id="top-credits">0</span> ₡</span>
+    <!-- CONTROL PANEL (Hidden until logged in) -->
+    <div id="control-panel" class="hidden min-h-screen">
+        <div class="flex h-screen overflow-hidden">
+            <!-- Sidebar -->
+            <div class="w-72 bg-black border-r border-white/10 flex flex-col">
+                <div class="p-8 border-b border-white/10">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-white rounded-2xl flex items-center justify-center">
+                            <span class="text-black text-3xl font-bold">Z</span>
+                        </div>
+                        <span class="text-4xl font-semibold tracking-tighter glow">Zerox</span>
                     </div>
-                    <button onclick="logout()" class="px-6 py-2 text-sm font-medium hover:bg-white/10 rounded-2xl transition">Sign Out</button>
+                    <div class="text-xs text-white/40 mt-1">Premium Tools Platform</div>
+                </div>
+                
+                <div class="flex-1 px-6 py-8 space-y-2">
+                    <a onclick="switchPage('dashboard')" id="nav-dashboard" class="nav-link flex items-center gap-3 px-5 py-4 rounded-2xl text-white bg-white/10">
+                        <i class="fas fa-home w-5"></i>
+                        <span class="font-medium">Dashboard</span>
+                    </a>
+                    <a onclick="switchPage('store')" id="nav-store" class="nav-link flex items-center gap-3 px-5 py-4 rounded-2xl hover:bg-white/5">
+                        <i class="fas fa-store w-5"></i>
+                        <span class="font-medium">Store</span>
+                    </a>
+                    <a onclick="switchPage('generate')" id="nav-generate" class="nav-link flex items-center gap-3 px-5 py-4 rounded-2xl hover:bg-white/5">
+                        <i class="fas fa-key w-5"></i>
+                        <span class="font-medium">Generate Keys</span>
+                    </a>
+                    <a href="#" class="nav-link flex items-center gap-3 px-5 py-4 rounded-2xl hover:bg-white/5">
+                        <i class="fas fa-history w-5"></i>
+                        <span class="font-medium">Orders</span>
+                    </a>
+                    <a href="#" class="nav-link flex items-center gap-3 px-5 py-4 rounded-2xl hover:bg-white/5">
+                        <i class="fas fa-cog w-5"></i>
+                        <span class="font-medium">Settings</span>
+                    </a>
+                </div>
+                
+                <div class="p-6 border-t border-white/10">
+                    <button onclick="logout()" class="w-full py-3 text-sm border border-white/30 hover:bg-white/5 rounded-2xl">Logout</button>
                 </div>
             </div>
 
-            <!-- Dashboard -->
-            <div id="dashboard-page" class="flex-1 p-10 overflow-auto">
-                <div class="max-w-7xl mx-auto">
-                    <h1 class="text-5xl font-semibold mb-2 glow">Dashboard</h1>
-                    <p class="text-white/50 mb-10">Overview • June 13, 2026</p>
-                    
-                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                        <div class="glass border border-white/10 rounded-3xl p-8 card col-span-2">
-                            <div class="flex justify-between items-start">
-                                <div>
-                                    <div class="text-sm text-white/60">Available Credits</div>
-                                    <div class="text-6xl font-semibold mt-3">0 ₡</div>
+            <!-- Main Content -->
+            <div class="flex-1 flex flex-col">
+                <!-- Top Bar -->
+                <div class="h-16 bg-black border-b border-white/10 flex items-center px-8 justify-between">
+                    <div class="flex items-center gap-8">
+                        <div class="text-sm font-medium text-white/70">Welcome back, <span id="username-display">smockfaced</span></div>
+                    </div>
+                    <div class="flex items-center gap-6">
+                        <div class="flex items-center gap-2 bg-white/5 px-5 py-2 rounded-2xl">
+                            <span class="font-semibold">Credits: <span id="top-credits">0</span> ₡</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dashboard -->
+                <div id="dashboard-page" class="flex-1 p-10 overflow-auto">
+                    <div class="max-w-7xl mx-auto">
+                        <h1 class="text-5xl font-semibold mb-2 glow">Dashboard</h1>
+                        <p class="text-white/50 mb-10">Overview • June 13, 2026</p>
+                        
+                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                            <div class="glass border border-white/10 rounded-3xl p-8 card col-span-2">
+                                <div class="flex justify-between items-start">
+                                    <div>
+                                        <div class="text-sm text-white/60">Available Credits</div>
+                                        <div class="text-6xl font-semibold mt-3" id="credits-display">0 ₡</div>
+                                    </div>
+                                    <button onclick="switchPage('store')" class="accent px-8 py-4 rounded-2xl font-semibold text-black flex items-center gap-3">
+                                        <i class="fas fa-plus"></i> Buy Credits
+                                    </button>
                                 </div>
-                                <button onclick="switchPage('store')" class="accent px-8 py-4 rounded-2xl font-semibold text-black flex items-center gap-3">
-                                    <i class="fas fa-plus"></i> Buy Credits
+                            </div>
+                            
+                            <div class="glass border border-white/10 rounded-3xl p-8 card">
+                                <div class="text-sm text-white/60 mb-3">Keys Generated</div>
+                                <div class="text-6xl font-semibold">0</div>
+                                <button onclick="switchPage('generate')" class="mt-8 w-full py-4 border border-white text-white hover:bg-white hover:text-black rounded-2xl font-medium transition">
+                                    Generate New Keys
                                 </button>
                             </div>
                         </div>
-                        
-                        <div class="glass border border-white/10 rounded-3xl p-8 card">
-                            <div class="text-sm text-white/60 mb-3">Keys Generated</div>
-                            <div class="text-6xl font-semibold">0</div>
-                            <button onclick="switchPage('generate')" class="mt-8 w-full py-4 border border-white text-white hover:bg-white hover:text-black rounded-2xl font-medium transition">
-                                Generate New Keys
-                            </button>
-                        </div>
-                    </div>
 
-                    <div class="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-6">
-                        <div class="glass border border-white/10 rounded-3xl p-8 card">
-                            <h2 class="text-xl font-semibold mb-6 flex items-center gap-3">
-                                <i class="fas fa-shield-alt"></i> Key Status Check
-                            </h2>
-                            <div class="flex gap-4">
-                                <input id="key-input" type="text" placeholder="Enter product key..." 
-                                       class="flex-1 bg-black border border-white/20 focus:border-white rounded-2xl px-6 py-4 outline-none text-white">
-                                <button onclick="checkKey()" class="px-10 bg-white text-black font-semibold rounded-2xl">Check</button>
-                            </div>
-                        </div>
-
-                        <div class="glass border border-white/10 rounded-3xl p-8 card">
-                            <h2 class="text-xl font-semibold mb-6">Recent Orders</h2>
-                            <div class="text-center py-16 text-white/40">No orders found</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Store Page -->
-            <div id="store-page" class="flex-1 p-10 overflow-auto hidden">
-                <div class="max-w-3xl mx-auto">
-                    <div class="glass border border-white/10 rounded-3xl p-16 text-center card">
-                        <div class="text-8xl mb-6">₡</div>
-                        <h2 class="text-5xl font-semibold mb-4">250 Credits</h2>
-                        <p class="text-white/60 text-lg mb-8">Initial purchase to unlock full features</p>
-                        <div class="text-6xl font-bold mb-12">$250</div>
-                        <button onclick="fakePurchase()" class="accent w-full py-6 rounded-3xl text-xl font-semibold text-black flex items-center justify-center gap-3">
-                            Buy Credits <i class="fas fa-arrow-right"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Generate Page -->
-            <div id="generate-page" class="flex-1 p-10 overflow-auto hidden">
-                <div class="max-w-5xl mx-auto">
-                    <div class="glass border border-white/10 rounded-3xl p-10 card">
-                        <input id="search-products" type="text" placeholder="Search products..." onkeyup="filterProducts()"
-                               class="w-full bg-black border border-white/20 focus:border-white rounded-3xl px-6 py-5 text-lg mb-8 outline-none">
-                        
-                        <div id="products-list" class="grid grid-cols-1 md:grid-cols-2 gap-4 max-h-[420px] overflow-auto"></div>
-                        
-                        <div class="mt-12 pt-8 border-t border-white/10 flex items-end gap-8">
-                            <div class="flex-1">
-                                <div class="text-sm text-white/60 mb-2">Quantity</div>
-                                <div class="flex border border-white/20 rounded-3xl overflow-hidden">
-                                    <button onclick="changeQty(-1)" class="w-16 py-6 text-2xl hover:bg-white/10">-</button>
-                                    <input id="quantity" type="text" value="1" class="flex-1 text-center bg-transparent text-4xl font-semibold focus:outline-none">
-                                    <button onclick="changeQty(1)" class="w-16 py-6 text-2xl hover:bg-white/10">+</button>
+                        <div class="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-6">
+                            <div class="glass border border-white/10 rounded-3xl p-8 card">
+                                <h2 class="text-xl font-semibold mb-6 flex items-center gap-3">
+                                    <i class="fas fa-shield-alt"></i> Key Status Check
+                                </h2>
+                                <div class="flex gap-4">
+                                    <input id="key-input" type="text" placeholder="Enter product key..." 
+                                           class="flex-1 bg-black border border-white/20 focus:border-white rounded-2xl px-6 py-4 outline-none text-white">
+                                    <button onclick="checkKey()" class="px-10 bg-white text-black font-semibold rounded-2xl">Check</button>
                                 </div>
                             </div>
-                            <div class="flex-1">
-                                <div class="text-sm text-white/60 mb-2">Total Cost</div>
-                                <div id="total-cost" class="text-5xl font-semibold">4 ₡</div>
+
+                            <div class="glass border border-white/10 rounded-3xl p-8 card">
+                                <h2 class="text-xl font-semibold mb-6">Recent Orders</h2>
+                                <div class="text-center py-16 text-white/40">No orders found</div>
                             </div>
-                            <button onclick="generateKeys()" class="flex-1 py-7 accent text-black font-semibold text-xl rounded-3xl">
-                                Generate Keys
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Store Page -->
+                <div id="store-page" class="flex-1 p-10 overflow-auto hidden">
+                    <div class="max-w-3xl mx-auto">
+                        <div class="glass border border-white/10 rounded-3xl p-16 text-center card">
+                            <div class="text-8xl mb-6">₡</div>
+                            <h2 class="text-5xl font-semibold mb-4">250 Credits</h2>
+                            <p class="text-white/60 text-lg mb-8">Initial purchase to unlock full features</p>
+                            <div class="text-6xl font-bold mb-12">$250</div>
+                            <button onclick="buyCredits()" class="accent w-full py-6 rounded-3xl text-xl font-semibold text-black flex items-center justify-center gap-3">
+                                Buy Credits <i class="fas fa-arrow-right"></i>
                             </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Generate Page -->
+                <div id="generate-page" class="flex-1 p-10 overflow-auto hidden">
+                    <div class="max-w-5xl mx-auto">
+                        <div class="glass border border-white/10 rounded-3xl p-10 card">
+                            <input id="search-products" type="text" placeholder="Search products..." onkeyup="filterProducts()"
+                                   class="w-full bg-black border border-white/20 focus:border-white rounded-3xl px-6 py-5 text-lg mb-8 outline-none">
+                            
+                            <div id="products-list" class="grid grid-cols-1 md:grid-cols-2 gap-4 max-h-[420px] overflow-auto"></div>
+                            
+                            <div class="mt-12 pt-8 border-t border-white/10 flex items-end gap-8">
+                                <div class="flex-1">
+                                    <div class="text-sm text-white/60 mb-2">Quantity</div>
+                                    <div class="flex border border-white/20 rounded-3xl overflow-hidden">
+                                        <button onclick="changeQty(-1)" class="w-16 py-6 text-2xl hover:bg-white/10">-</button>
+                                        <input id="quantity" type="text" value="1" class="flex-1 text-center bg-transparent text-4xl font-semibold focus:outline-none">
+                                        <button onclick="changeQty(1)" class="w-16 py-6 text-2xl hover:bg-white/10">+</button>
+                                    </div>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="text-sm text-white/60 mb-2">Total Cost</div>
+                                    <div id="total-cost" class="text-5xl font-semibold">4 ₡</div>
+                                </div>
+                                <button onclick="generateKeys()" class="flex-1 py-7 accent text-black font-semibold text-xl rounded-3xl">
+                                    Generate Keys
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Generated Keys -->
+                        <div class="max-w-5xl mx-auto mt-8">
+                            <div class="glass border border-white/10 rounded-3xl p-8">
+                                <h3 class="font-semibold mb-4">Your Generated Keys</h3>
+                                <div id="generated-keys-list" class="space-y-2 text-sm"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -209,6 +254,86 @@
     </div>
 
     <script>
+        // ==================== LOGIN SYSTEM ====================
+        function login() {
+            const username = document.getElementById('username').value || 'user';
+            localStorage.setItem('zerox_logged_in', 'true');
+            localStorage.setItem('zerox_username', username);
+            
+            document.getElementById('login-page').classList.add('hidden');
+            document.getElementById('control-panel').classList.remove('hidden');
+            
+            document.getElementById('username-display').textContent = username;
+            updateCreditsDisplay();
+            renderGeneratedKeys();
+        }
+
+        function checkLogin() {
+            if (localStorage.getItem('zerox_logged_in') === 'true') {
+                const username = localStorage.getItem('zerox_username') || 'user';
+                document.getElementById('login-page').classList.add('hidden');
+                document.getElementById('control-panel').classList.remove('hidden');
+                document.getElementById('username-display').textContent = username;
+                updateCreditsDisplay();
+                renderGeneratedKeys();
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('zerox_logged_in');
+            window.location.reload();
+        }
+
+        // ==================== CREDITS ====================
+        let credits = parseInt(localStorage.getItem('zerox_credits')) || 0;
+
+        function updateCreditsDisplay() {
+            document.getElementById('top-credits').textContent = credits;
+            const display = document.getElementById('credits-display');
+            if (display) display.textContent = credits + ' ₡';
+        }
+
+        function saveCredits() {
+            localStorage.setItem('zerox_credits', credits);
+            updateCreditsDisplay();
+        }
+
+        // ==================== GENERATED KEYS ====================
+        let generatedKeys = JSON.parse(localStorage.getItem('zerox_keys')) || [];
+
+        function saveGeneratedKeys() {
+            localStorage.setItem('zerox_keys', JSON.stringify(generatedKeys));
+            renderGeneratedKeys();
+        }
+
+        function renderGeneratedKeys() {
+            const container = document.getElementById('generated-keys-list');
+            if (!container) return;
+            container.innerHTML = '';
+            if (generatedKeys.length === 0) {
+                container.innerHTML = '<div class="text-white/40">No keys generated yet</div>';
+                return;
+            }
+            generatedKeys.slice().reverse().forEach(key => {
+                const div = document.createElement('div');
+                div.className = 'flex justify-between items-center bg-black/50 p-3 rounded-xl';
+                div.innerHTML = `
+                    <div class="font-mono">${key}</div>
+                    <button onclick="copyKey('${key}', this)" class="px-4 py-1 text-xs border border-white/30 hover:bg-white/10 rounded">Copy</button>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function copyKey(key, btn) {
+            navigator.clipboard.writeText(key).then(() => {
+                const original = btn.textContent;
+                btn.textContent = 'Copied!';
+                setTimeout(() => btn.textContent = original, 1500);
+            });
+        }
+
+        // ==================== ORIGINAL FUNCTIONS ====================
         const products = [
             {name: "Rogue Company Day", price: 2.50},
             {name: "Rogue Company Week", price: 7.50},
@@ -257,21 +382,35 @@
             renderProducts(products.filter(p => p.name.toLowerCase().includes(term)));
         }
 
-        function generateKeys() { alert("✅ Keys generated successfully!"); }
-        function checkKey() { 
+        function generateKeys() {
+            const qty = parseInt(document.getElementById('quantity').value) || 1;
+            const prefix = selectedProduct.name.replace(/\s+/g, '').substring(0, 6).toUpperCase();
+            
+            for (let i = 0; i < qty; i++) {
+                const key = `${prefix}-${Math.random().toString(36).substring(2, 10).toUpperCase()}-${Date.now().toString().slice(-6)}`;
+                generatedKeys.push(key);
+            }
+            saveGeneratedKeys();
+            alert(`✅ ${qty} key(s) generated successfully!`);
+        }
+
+        function checkKey() {
             const input = document.getElementById('key-input').value.trim();
             if (input) alert("✅ Key is valid and active.");
         }
-        function fakePurchase() {
-            alert("✅ Purchase completed! Credits added.");
-            document.getElementById('top-credits').textContent = '250';
+
+        function buyCredits() {
+            credits += 250;
+            saveCredits();
+            alert("✅ 250 Credits added!");
+            switchPage('dashboard');
         }
 
         function switchPage(page) {
             document.querySelectorAll('#dashboard-page, #store-page, #generate-page').forEach(el => el.classList.add('hidden'));
             document.getElementById(page + '-page').classList.remove('hidden');
             
-            document.querySelectorAll('.nav-link').forEach(link => {
+            document.querySelectorAll('#control-panel .nav-link').forEach(link => {
                 link.classList.remove('bg-white/10', 'text-white');
                 if (link.id === 'nav-' + page) {
                     link.classList.add('bg-white/10', 'text-white');
@@ -279,13 +418,10 @@
             });
         }
 
-        function logout() {
-            if (confirm("Sign out of Zerox?")) window.location.reload();
-        }
-
+        // ==================== INIT ====================
         window.onload = () => {
+            checkLogin();
             renderProducts(products);
-            switchPage('dashboard');
             document.getElementById('quantity').addEventListener('input', updateTotal);
         };
     </script>
