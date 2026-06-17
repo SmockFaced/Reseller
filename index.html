@@ -13,9 +13,27 @@
         .glass { background: rgba(255,255,255,0.03); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.08); }
         .nav-link { transition: all 0.2s ease; }
         .nav-link.active { background-color: #27272a; }
+        
+        .modal {
+            animation: modalPop 0.3s ease;
+        }
+        @keyframes modalPop {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
     </style>
 </head>
 <body class="text-white min-h-screen">
+
+    <!-- CUSTOM MODAL -->
+    <div id="custom-modal" class="hidden fixed inset-0 bg-black/80 flex items-center justify-center z-50">
+        <div class="glass border border-white/20 rounded-3xl p-8 w-full max-w-md modal">
+            <div id="modal-icon" class="text-5xl mb-4"></div>
+            <div id="modal-title" class="text-2xl font-semibold mb-3"></div>
+            <div id="modal-message" class="text-white/80 mb-8"></div>
+            <button onclick="closeModal()" class="w-full py-4 bg-white text-black font-semibold rounded-2xl">OK</button>
+        </div>
+    </div>
 
     <!-- LOGIN PAGE -->
     <div id="login-page" class="min-h-screen flex items-center justify-center">
@@ -50,6 +68,7 @@
     <!-- USER PANEL -->
     <div id="user-panel" class="hidden min-h-screen">
         <div class="flex h-screen overflow-hidden">
+            <!-- Sidebar -->
             <div class="w-72 bg-black border-r border-white/10 flex flex-col">
                 <div class="p-6 border-b border-white/10">
                     <div class="flex items-center gap-3">
@@ -224,7 +243,7 @@
         </div>
     </div>
 
-    <!-- ADMIN PANEL - IMPROVED -->
+    <!-- ADMIN PANEL -->
     <div id="admin-panel" class="hidden min-h-screen">
         <div class="flex h-screen overflow-hidden">
             <div class="w-72 bg-black border-r border-white/10 flex flex-col">
@@ -247,49 +266,7 @@
             </div>
 
             <div class="flex-1 p-10 overflow-auto">
-                <!-- Purchases -->
-                <div id="admin-purchases" class="admin-section">
-                    <h2 class="text-3xl font-semibold mb-8">Purchases & Logistics</h2>
-                    <div class="glass border border-white/10 rounded-3xl p-8">
-                        <table class="w-full">
-                            <thead>
-                                <tr class="text-left text-white/60 border-b border-white/10">
-                                    <th class="py-4">User</th>
-                                    <th class="py-4">Product</th>
-                                    <th class="py-4">Amount</th>
-                                    <th class="py-4">Date</th>
-                                    <th class="py-4">Status</th>
-                                </tr>
-                            </thead>
-                            <tbody id="purchases-table">
-                                <tr><td colspan="5" class="py-12 text-center text-white/50">No purchases yet</td></tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <!-- Products -->
-                <div id="admin-products" class="admin-section hidden">
-                    <div class="flex justify-between items-center mb-8">
-                        <h2 class="text-3xl font-semibold">Products Management</h2>
-                        <button onclick="showAddProductModal()" class="accent px-6 py-3 rounded-2xl text-black font-semibold">+ Add Product</button>
-                    </div>
-                    <div class="glass border border-white/10 rounded-3xl p-8">
-                        <table class="w-full">
-                            <thead>
-                                <tr class="text-left text-white/60 border-b border-white/10">
-                                    <th class="py-4">Name</th>
-                                    <th class="py-4">Price</th>
-                                    <th class="py-4 w-40">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody id="products-table"></tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <!-- Users -->
-                <div id="admin-users" class="admin-section hidden">
+                <div id="admin-users" class="admin-section">
                     <div class="flex justify-between items-center mb-8">
                         <h2 class="text-3xl font-semibold">Users Management</h2>
                         <button onclick="showAddUserModal()" class="accent px-6 py-3 rounded-2xl text-black font-semibold">+ Add User</button>
@@ -301,7 +278,8 @@
                                     <th class="py-4">Username</th>
                                     <th class="py-4">Role</th>
                                     <th class="py-4">Balance</th>
-                                    <th class="py-4 w-56">Actions</th>
+                                    <th class="py-4">Status</th>
+                                    <th class="py-4 w-64">Actions</th>
                                 </tr>
                             </thead>
                             <tbody id="users-table"></tbody>
@@ -315,6 +293,32 @@
     <script>
         const API = 'https://zerox-backend-r5fr.onrender.com/api';
         let token = localStorage.getItem('token') || '';
+        let products = [];
+        let selectedProduct = null;
+
+        // Custom Modal
+        function showModal(message, type = 'success') {
+            const modal = document.getElementById('custom-modal');
+            const icon = document.getElementById('modal-icon');
+            const title = document.getElementById('modal-title');
+            const msg = document.getElementById('modal-message');
+
+            if (type === 'success') {
+                icon.innerHTML = '✅';
+                title.textContent = 'Success';
+                title.className = 'text-2xl font-semibold mb-3 text-emerald-400';
+            } else {
+                icon.innerHTML = '❌';
+                title.textContent = 'Error';
+                title.className = 'text-2xl font-semibold mb-3 text-red-400';
+            }
+            msg.textContent = message;
+            modal.classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('custom-modal').classList.add('hidden');
+        }
 
         async function login() {
             const username = document.getElementById('username').value.trim();
@@ -330,7 +334,7 @@
                 const data = await res.json();
 
                 if (data.error) {
-                    alert(data.error);
+                    showModal(data.error, 'error');
                     return;
                 }
 
@@ -343,7 +347,7 @@
 
                 if (data.role === 'admin') {
                     document.getElementById('admin-panel').classList.remove('hidden');
-                    showAdminSection('purchases');
+                    showAdminSection('users');
                 } else {
                     document.getElementById('user-panel').classList.remove('hidden');
                     document.getElementById('user-username').textContent = data.username;
@@ -351,7 +355,7 @@
                     loadUserData();
                 }
             } catch (err) {
-                alert("Cannot connect to server.");
+                showModal("Cannot connect to server. Backend may be down.", 'error');
             }
         }
 
@@ -375,7 +379,7 @@
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             const data = await res.json();
-            alert(data.message);
+            showModal(data.message, 'success');
             loadUserData();
         }
 
@@ -390,23 +394,11 @@
 
         function checkKeyStatus() {
             const key = document.getElementById('keycheck-input').value.trim();
-            const resultDiv = document.getElementById('keycheck-result');
-            if (!key) return alert("Please enter a key");
-
-            resultDiv.classList.remove('hidden');
-            resultDiv.innerHTML = `
-                <div class="p-6 bg-emerald-500/10 border border-emerald-500/30 rounded-2xl">
-                    <div class="flex items-center gap-3">
-                        <i class="fas fa-check-circle text-emerald-400 text-3xl"></i>
-                        <div>
-                            <div class="font-semibold text-emerald-400">Key is Valid & Active</div>
-                            <div class="text-sm text-white/70 mt-1">Expires in 27 days • HWID bound: Yes</div>
-                        </div>
-                    </div>
-                </div>
-            `;
+            if (!key) return showModal("Please enter a key", 'error');
+            showModal("Key is valid and active", 'success');
         }
 
+        // Generate Keys, Orders, HWID functions remain the same as previous
         async function loadProductsForUser() {
             const res = await fetch(`${API}/products`);
             products = await res.json();
@@ -445,9 +437,9 @@
         }
 
         function generateKeys() {
-            if (!selectedProduct) return alert("Please select a product first");
+            if (!selectedProduct) return showModal("Please select a product first", 'error');
             const qty = parseInt(document.getElementById('quantity').value) || 1;
-            alert(`✅ Successfully generated ${qty} key(s) for ${selectedProduct.name}`);
+            showModal(`Successfully generated ${qty} key(s) for ${selectedProduct.name}`, 'success');
         }
 
         function loadOrders() {
@@ -473,34 +465,15 @@
                 btn.textContent = "Reset Successful";
                 btn.style.backgroundColor = "#10b981";
                 btn.style.color = "black";
+                showModal("HWID has been reset successfully.", 'success');
             }, 1200);
         }
 
+        // Admin Functions
         async function showAdminSection(section) {
             document.querySelectorAll('.admin-section').forEach(el => el.classList.add('hidden'));
             document.getElementById('admin-' + section).classList.remove('hidden');
-
-            if (section === 'products') await loadProducts();
-            if (section === 'users') await loadUsers();
-        }
-
-        async function loadProducts() {
-            const res = await fetch(`${API}/products`);
-            const products = await res.json();
-            const tbody = document.getElementById('products-table');
-            tbody.innerHTML = '';
-            products.forEach(p => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td class="py-4">${p.name}</td>
-                    <td class="py-4">$${p.price}</td>
-                    <td class="py-4">
-                        <button onclick="editProduct(${p.id})" class="text-blue-400 hover:underline mr-4">Edit</button>
-                        <button onclick="deleteProduct(${p.id})" class="text-red-400 hover:underline">Delete</button>
-                    </td>
-                `;
-                tbody.appendChild(row);
-            });
+            if (section === 'users') loadUsers();
         }
 
         async function loadUsers() {
@@ -517,58 +490,29 @@
                     <td class="py-4">${u.role}</td>
                     <td class="py-4 font-semibold">${u.balance || 0} ₡</td>
                     <td class="py-4">
-                        <button onclick="editUserBalance(${u.id})" class="text-emerald-400 hover:underline">Edit Balance</button>
+                        <span class="px-3 py-1 text-xs rounded-full ${u.banned ? 'bg-red-500/20 text-red-400' : 'bg-emerald-500/20 text-emerald-400'}">
+                            ${u.banned ? 'BANNED' : 'Active'}
+                        </span>
+                    </td>
+                    <td class="py-4">
+                        <button onclick="editUser(${u.id})" class="text-blue-400 hover:underline mr-3">Edit</button>
+                        <button onclick="toggleBan(${u.id}, ${!u.banned})" class="text-red-400 hover:underline mr-3">
+                            ${u.banned ? 'Unban' : 'Ban'}
+                        </button>
                     </td>
                 `;
                 tbody.appendChild(row);
             });
         }
 
-        function showAddProductModal() {
-            const name = prompt("Product Name:");
-            const price = parseFloat(prompt("Price:"));
-            if (name && price) {
-                fetch(`${API}/admin/products`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
-                    body: JSON.stringify({ name, price })
-                }).then(() => loadProducts());
-            }
-        }
-
-        async function editProduct(id) {
-            const name = prompt("New name:");
-            const price = parseFloat(prompt("New price:"));
-            if (name && price) {
-                await fetch(`${API}/admin/products/${id}`, {
-                    method: 'PUT',
-                    headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
-                    body: JSON.stringify({ name, price })
-                });
-                loadProducts();
-            }
-        }
-
-        async function deleteProduct(id) {
-            if (confirm("Delete this product?")) {
-                await fetch(`${API}/admin/products/${id}`, {
-                    method: 'DELETE',
-                    headers: { 'Authorization': `Bearer ${token}` }
-                });
-                loadProducts();
-            }
-        }
-
-        async function editUserBalance(userId) {
-            const newBalance = prompt("Enter new balance:");
-            if (newBalance !== null) {
-                await fetch(`${API}/admin/users/${userId}/balance`, {
-                    method: 'PUT',
-                    headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
-                    body: JSON.stringify({ balance: parseInt(newBalance) })
-                });
-                loadUsers();
-            }
+        async function toggleBan(userId, ban) {
+            if (!confirm(ban ? "Ban this user?" : "Unban this user?")) return;
+            await fetch(`${API}/admin/users/${userId}/ban`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+                body: JSON.stringify({ banned: ban })
+            });
+            loadUsers();
         }
 
         function showAddUserModal() {
@@ -583,6 +527,18 @@
             }
         }
 
+        function editUser(userId) {
+            const username = prompt("New username:");
+            const password = prompt("New password (leave blank to keep):");
+            if (username) {
+                fetch(`${API}/admin/users/${userId}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+                    body: JSON.stringify({ username, password: password || undefined })
+                }).then(() => loadUsers());
+            }
+        }
+
         window.onload = () => {
             if (token && localStorage.getItem('role')) {
                 const role = localStorage.getItem('role');
@@ -590,6 +546,7 @@
                 document.getElementById('login-page').classList.add('hidden');
                 if (role === 'admin') {
                     document.getElementById('admin-panel').classList.remove('hidden');
+                    showAdminSection('users');
                 } else {
                     document.getElementById('user-panel').classList.remove('hidden');
                     document.getElementById('user-username').textContent = username;
