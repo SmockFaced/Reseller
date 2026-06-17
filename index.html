@@ -35,34 +35,28 @@
                 <div class="space-y-6">
                     <div>
                         <label class="block text-sm text-white/70 mb-2">Username</label>
-                        <input id="username" type="text" value="smockfaced" class="w-full bg-black border border-white/20 focus:border-white rounded-2xl px-6 py-4 outline-none">
+                        <input id="username" type="text" value="admin" class="w-full bg-black border border-white/20 focus:border-white rounded-2xl px-6 py-4 outline-none">
                     </div>
                     <div>
                         <label class="block text-sm text-white/70 mb-2">Password</label>
-                        <input id="password" type="password" value="demo" class="w-full bg-black border border-white/20 focus:border-white rounded-2xl px-6 py-4 outline-none">
+                        <input id="password" type="password" value="admin123" class="w-full bg-black border border-white/20 focus:border-white rounded-2xl px-6 py-4 outline-none">
                     </div>
                     <button onclick="login()" class="accent w-full py-4 rounded-2xl text-xl font-semibold text-black">Login</button>
-                </div>
-                <div class="mt-6 text-center text-xs text-white/50">
-                    Demo: admin / admin123 (Admin) &nbsp;|&nbsp; smockfaced / demo (User)
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- ==================== USER PANEL (FULL) ==================== -->
+    <!-- USER PANEL -->
     <div id="user-panel" class="hidden min-h-screen">
         <div class="flex h-screen overflow-hidden">
-            <!-- Sidebar -->
             <div class="w-72 bg-black border-r border-white/10 flex flex-col">
                 <div class="p-6 border-b border-white/10">
                     <div class="flex items-center gap-3">
                         <div class="w-9 h-9 bg-white rounded-xl flex items-center justify-center">
                             <span class="text-black text-2xl font-bold">Z</span>
                         </div>
-                        <div>
-                            <span class="text-2xl font-semibold tracking-tighter">Zerox</span>
-                        </div>
+                        <div><span class="text-2xl font-semibold tracking-tighter">Zerox</span></div>
                     </div>
                 </div>
 
@@ -98,7 +92,6 @@
                 </div>
             </div>
 
-            <!-- Main Content -->
             <div class="flex-1 flex flex-col">
                 <div class="h-16 bg-black border-b border-white/10 flex items-center px-8 justify-between">
                     <div>Welcome back, <span id="user-username"></span></div>
@@ -158,8 +151,7 @@
                         <div class="glass border border-white/10 rounded-3xl p-8">
                             <h3 class="text-2xl font-semibold mb-6">Generate Keys</h3>
                             <div class="relative mb-6">
-                                <input id="search-products" type="text" placeholder="Search products..." onkeyup="filterProducts()"
-                                       class="w-full bg-zinc-900 border border-white/20 focus:border-white rounded-2xl px-6 py-4 pl-12 outline-none">
+                                <input id="search-products" type="text" placeholder="Search products..." onkeyup="filterProducts()" class="w-full bg-zinc-900 border border-white/20 focus:border-white rounded-2xl px-6 py-4 pl-12 outline-none">
                                 <i class="fas fa-search absolute left-5 top-5 text-white/40"></i>
                             </div>
                             <div id="products-list" class="max-h-[420px] overflow-auto space-y-2 mb-8"></div>
@@ -189,8 +181,7 @@
                     <div class="max-w-3xl mx-auto">
                         <h2 class="text-3xl font-semibold mb-8">Key Status Check</h2>
                         <div class="glass border border-white/10 rounded-3xl p-12">
-                            <input id="keycheck-input" type="text" placeholder="XXXX-XXXX-XXXX-XXXX" 
-                                   class="w-full bg-zinc-900 border border-white/20 focus:border-white rounded-2xl px-6 py-5 text-lg outline-none mb-6">
+                            <input id="keycheck-input" type="text" placeholder="XXXX-XXXX-XXXX-XXXX" class="w-full bg-zinc-900 border border-white/20 focus:border-white rounded-2xl px-6 py-5 text-lg outline-none mb-6">
                             <button onclick="checkKeyStatus()" class="w-full py-5 accent text-black font-semibold text-xl rounded-2xl">
                                 Check Key Status
                             </button>
@@ -233,7 +224,7 @@
         </div>
     </div>
 
-    <!-- ADMIN PANEL -->
+    <!-- ADMIN PANEL - IMPROVED -->
     <div id="admin-panel" class="hidden min-h-screen">
         <div class="flex h-screen overflow-hidden">
             <div class="w-72 bg-black border-r border-white/10 flex flex-col">
@@ -242,10 +233,10 @@
                         <div class="w-10 h-10 bg-red-500 rounded-2xl flex items-center justify-center">
                             <span class="text-white text-3xl font-bold">A</span>
                         </div>
-                        <span class="text-4xl font-semibold tracking-tighter">Admin</span>
+                        <span class="text-4xl font-semibold tracking-tighter">Admin Panel</span>
                     </div>
                 </div>
-                <div class="flex-1 px-6 py-8 space-y-2 text-sm">
+                <div class="flex-1 px-6 py-8 space-y-1 text-sm">
                     <a onclick="showAdminSection('purchases')" class="block px-5 py-3 rounded-2xl hover:bg-white/5 cursor-pointer">Purchases</a>
                     <a onclick="showAdminSection('products')" class="block px-5 py-3 rounded-2xl hover:bg-white/5 cursor-pointer">Products</a>
                     <a onclick="showAdminSection('users')" class="block px-5 py-3 rounded-2xl hover:bg-white/5 cursor-pointer">Users</a>
@@ -256,6 +247,7 @@
             </div>
 
             <div class="flex-1 p-10 overflow-auto">
+                <!-- Purchases -->
                 <div id="admin-purchases" class="admin-section">
                     <h2 class="text-3xl font-semibold mb-8">Purchases & Logistics</h2>
                     <div class="glass border border-white/10 rounded-3xl p-8">
@@ -269,14 +261,17 @@
                                     <th class="py-4">Status</th>
                                 </tr>
                             </thead>
-                            <tbody id="purchases-table"></tbody>
+                            <tbody id="purchases-table">
+                                <tr><td colspan="5" class="py-12 text-center text-white/50">No purchases yet</td></tr>
+                            </tbody>
                         </table>
                     </div>
                 </div>
 
+                <!-- Products -->
                 <div id="admin-products" class="admin-section hidden">
                     <div class="flex justify-between items-center mb-8">
-                        <h2 class="text-3xl font-semibold">Products</h2>
+                        <h2 class="text-3xl font-semibold">Products Management</h2>
                         <button onclick="showAddProductModal()" class="accent px-6 py-3 rounded-2xl text-black font-semibold">+ Add Product</button>
                     </div>
                     <div class="glass border border-white/10 rounded-3xl p-8">
@@ -293,9 +288,10 @@
                     </div>
                 </div>
 
+                <!-- Users -->
                 <div id="admin-users" class="admin-section hidden">
                     <div class="flex justify-between items-center mb-8">
-                        <h2 class="text-3xl font-semibold">Users</h2>
+                        <h2 class="text-3xl font-semibold">Users Management</h2>
                         <button onclick="showAddUserModal()" class="accent px-6 py-3 rounded-2xl text-black font-semibold">+ Add User</button>
                     </div>
                     <div class="glass border border-white/10 rounded-3xl p-8">
@@ -319,8 +315,6 @@
     <script>
         const API = 'https://zerox-backend-r5fr.onrender.com/api';
         let token = localStorage.getItem('token') || '';
-        let products = [];
-        let selectedProduct = null;
 
         async function login() {
             const username = document.getElementById('username').value.trim();
@@ -357,7 +351,7 @@
                     loadUserData();
                 }
             } catch (err) {
-                alert("Cannot connect to server. Is the backend running?");
+                alert("Cannot connect to server.");
             }
         }
 
@@ -387,22 +381,7 @@
 
         function switchUserPage(page) {
             document.querySelectorAll('#user-dashboard-content, #user-store, #user-generate, #user-keycheck, #user-orders, #user-hwid').forEach(el => el.classList.add('hidden'));
-            
-            if (page === 'dashboard') document.getElementById('user-dashboard-content').classList.remove('hidden');
-            else if (page === 'store') document.getElementById('user-store').classList.remove('hidden');
-            else if (page === 'generate') {
-                document.getElementById('user-generate').classList.remove('hidden');
-                loadProductsForUser();
-            }
-            else if (page === 'keycheck') document.getElementById('user-keycheck').classList.remove('hidden');
-            else if (page === 'orders') {
-                document.getElementById('user-orders').classList.remove('hidden');
-                loadOrders();
-            }
-            else if (page === 'hwid') {
-                document.getElementById('user-hwid').classList.remove('hidden');
-                loadHWIDResets();
-            }
+            document.getElementById('user-' + page).classList.remove('hidden');
             
             document.querySelectorAll('#user-panel .nav-link').forEach(link => link.classList.remove('active', 'bg-zinc-900'));
             const activeNav = document.getElementById('nav-user-' + page);
@@ -472,15 +451,7 @@
         }
 
         function loadOrders() {
-            document.getElementById('orders-table').innerHTML = `
-                <tr>
-                    <td class="py-4">#ORD-001</td>
-                    <td class="py-4">HWID Spoofer Month</td>
-                    <td class="py-4">$10</td>
-                    <td class="py-4">2026-06-10</td>
-                    <td class="py-4"><span class="px-3 py-1 bg-emerald-500/20 text-emerald-400 rounded-full text-xs">Active</span></td>
-                </tr>
-            `;
+            document.getElementById('orders-table').innerHTML = `<tr><td colspan="5" class="py-12 text-center text-white/50">No orders yet</td></tr>`;
         }
 
         function loadHWIDResets() {
@@ -508,6 +479,108 @@
         async function showAdminSection(section) {
             document.querySelectorAll('.admin-section').forEach(el => el.classList.add('hidden'));
             document.getElementById('admin-' + section).classList.remove('hidden');
+
+            if (section === 'products') await loadProducts();
+            if (section === 'users') await loadUsers();
+        }
+
+        async function loadProducts() {
+            const res = await fetch(`${API}/products`);
+            const products = await res.json();
+            const tbody = document.getElementById('products-table');
+            tbody.innerHTML = '';
+            products.forEach(p => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td class="py-4">${p.name}</td>
+                    <td class="py-4">$${p.price}</td>
+                    <td class="py-4">
+                        <button onclick="editProduct(${p.id})" class="text-blue-400 hover:underline mr-4">Edit</button>
+                        <button onclick="deleteProduct(${p.id})" class="text-red-400 hover:underline">Delete</button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        async function loadUsers() {
+            const res = await fetch(`${API}/admin/users`, {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            const users = await res.json();
+            const tbody = document.getElementById('users-table');
+            tbody.innerHTML = '';
+            users.forEach(u => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td class="py-4">${u.username}</td>
+                    <td class="py-4">${u.role}</td>
+                    <td class="py-4 font-semibold">${u.balance || 0} ₡</td>
+                    <td class="py-4">
+                        <button onclick="editUserBalance(${u.id})" class="text-emerald-400 hover:underline">Edit Balance</button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        function showAddProductModal() {
+            const name = prompt("Product Name:");
+            const price = parseFloat(prompt("Price:"));
+            if (name && price) {
+                fetch(`${API}/admin/products`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+                    body: JSON.stringify({ name, price })
+                }).then(() => loadProducts());
+            }
+        }
+
+        async function editProduct(id) {
+            const name = prompt("New name:");
+            const price = parseFloat(prompt("New price:"));
+            if (name && price) {
+                await fetch(`${API}/admin/products/${id}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+                    body: JSON.stringify({ name, price })
+                });
+                loadProducts();
+            }
+        }
+
+        async function deleteProduct(id) {
+            if (confirm("Delete this product?")) {
+                await fetch(`${API}/admin/products/${id}`, {
+                    method: 'DELETE',
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                loadProducts();
+            }
+        }
+
+        async function editUserBalance(userId) {
+            const newBalance = prompt("Enter new balance:");
+            if (newBalance !== null) {
+                await fetch(`${API}/admin/users/${userId}/balance`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+                    body: JSON.stringify({ balance: parseInt(newBalance) })
+                });
+                loadUsers();
+            }
+        }
+
+        function showAddUserModal() {
+            const username = prompt("New username:");
+            const password = prompt("Password:");
+            if (username && password) {
+                fetch(`${API}/admin/users`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+                    body: JSON.stringify({ username, password })
+                }).then(() => loadUsers());
+            }
         }
 
         window.onload = () => {
