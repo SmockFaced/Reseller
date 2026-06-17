@@ -36,11 +36,11 @@
                 <div class="space-y-6">
                     <div>
                         <label class="block text-sm text-white/70 mb-2">Username</label>
-                        <input id="username" type="text" value="smockfaced" class="w-full bg-black border border-white/20 focus:border-white rounded-2xl px-6 py-4 outline-none">
+                        <input id="username" type="text" value="admin" class="w-full bg-black border border-white/20 focus:border-white rounded-2xl px-6 py-4 outline-none">
                     </div>
                     <div>
                         <label class="block text-sm text-white/70 mb-2">Password</label>
-                        <input id="password" type="password" value="demo" class="w-full bg-black border border-white/20 focus:border-white rounded-2xl px-6 py-4 outline-none">
+                        <input id="password" type="password" value="admin123" class="w-full bg-black border border-white/20 focus:border-white rounded-2xl px-6 py-4 outline-none">
                     </div>
                     <button onclick="login()" class="accent w-full py-4 rounded-2xl text-xl font-semibold text-black">Login</button>
                 </div>
@@ -69,28 +69,22 @@
                 </div>
 
                 <div class="flex-1 p-4 space-y-1">
-                    <a onclick="switchUserPage('dashboard')" id="nav-user-dashboard"
-                       class="nav-link flex items-center gap-3 px-5 py-3 rounded-2xl text-white bg-zinc-900">
+                    <a onclick="switchUserPage('dashboard')" id="nav-user-dashboard" class="nav-link flex items-center gap-3 px-5 py-3 rounded-2xl text-white bg-zinc-900">
                         <i class="fas fa-home w-5"></i> <span>Dashboard</span>
                     </a>
-                    <a onclick="switchUserPage('store')" id="nav-user-store"
-                       class="nav-link flex items-center gap-3 px-5 py-3 rounded-2xl hover:bg-zinc-900">
+                    <a onclick="switchUserPage('store')" id="nav-user-store" class="nav-link flex items-center gap-3 px-5 py-3 rounded-2xl hover:bg-zinc-900">
                         <i class="fas fa-store w-5"></i> <span>Store</span>
                     </a>
-                    <a onclick="switchUserPage('generate')" id="nav-user-generate"
-                       class="nav-link flex items-center gap-3 px-5 py-3 rounded-2xl hover:bg-zinc-900">
+                    <a onclick="switchUserPage('generate')" id="nav-user-generate" class="nav-link flex items-center gap-3 px-5 py-3 rounded-2xl hover:bg-zinc-900">
                         <i class="fas fa-key w-5"></i> <span>Generate Keys</span>
                     </a>
-                    <a onclick="switchUserPage('keycheck')" id="nav-user-keycheck"
-                       class="nav-link flex items-center gap-3 px-5 py-3 rounded-2xl hover:bg-zinc-900">
+                    <a onclick="switchUserPage('keycheck')" id="nav-user-keycheck" class="nav-link flex items-center gap-3 px-5 py-3 rounded-2xl hover:bg-zinc-900">
                         <i class="fas fa-shield-alt w-5"></i> <span>Key Status Check</span>
                     </a>
-                    <a onclick="switchUserPage('orders')" id="nav-user-orders"
-                       class="nav-link flex items-center gap-3 px-5 py-3 rounded-2xl hover:bg-zinc-900">
+                    <a onclick="switchUserPage('orders')" id="nav-user-orders" class="nav-link flex items-center gap-3 px-5 py-3 rounded-2xl hover:bg-zinc-900">
                         <i class="fas fa-list w-5"></i> <span>Orders</span>
                     </a>
-                    <a onclick="switchUserPage('hwid')" id="nav-user-hwid"
-                       class="nav-link flex items-center gap-3 px-5 py-3 rounded-2xl hover:bg-zinc-900">
+                    <a onclick="switchUserPage('hwid')" id="nav-user-hwid" class="nav-link flex items-center gap-3 px-5 py-3 rounded-2xl hover:bg-zinc-900">
                         <i class="fas fa-sync w-5"></i> <span>HWID Resets</span>
                     </a>
                 </div>
@@ -124,7 +118,6 @@
                 <div id="user-dashboard-content" class="flex-1 p-10 overflow-auto">
                     <div class="max-w-7xl mx-auto">
                         <h1 class="text-6xl font-semibold tracking-tighter glow mb-10">Dashboard</h1>
-
                         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
                             <div class="glass border border-white/10 rounded-3xl p-8">
                                 <div class="flex justify-between items-start">
@@ -132,8 +125,7 @@
                                         <div class="text-sm text-white/60">Available Credits</div>
                                         <div class="text-7xl font-semibold mt-3" id="credits-big">0 ₡</div>
                                     </div>
-                                    <button onclick="switchUserPage('store')" 
-                                            class="px-6 py-3 bg-white text-black rounded-2xl font-semibold flex items-center gap-2 text-sm">
+                                    <button onclick="switchUserPage('store')" class="px-6 py-3 bg-white text-black rounded-2xl font-semibold flex items-center gap-2 text-sm">
                                         <i class="fas fa-plus"></i> Buy Credits
                                     </button>
                                 </div>
@@ -145,8 +137,7 @@
                                         <div class="text-sm text-white/60">Keys Generated</div>
                                         <div class="text-7xl font-semibold mt-3">0</div>
                                     </div>
-                                    <button onclick="switchUserPage('generate')" 
-                                            class="px-8 py-3 border border-white/70 hover:bg-white hover:text-black rounded-2xl font-semibold text-sm">
+                                    <button onclick="switchUserPage('generate')" class="px-8 py-3 border border-white/70 hover:bg-white hover:text-black rounded-2xl font-semibold text-sm">
                                         Generate New Keys
                                     </button>
                                 </div>
@@ -173,15 +164,12 @@
                     <div class="max-w-5xl mx-auto">
                         <div class="glass border border-white/10 rounded-3xl p-8">
                             <h3 class="text-2xl font-semibold mb-6">Generate Keys</h3>
-
                             <div class="relative mb-6">
                                 <input id="search-products" type="text" placeholder="Search products..." onkeyup="filterProducts()"
                                        class="w-full bg-zinc-900 border border-white/20 focus:border-white rounded-2xl px-6 py-4 pl-12 outline-none">
                                 <i class="fas fa-search absolute left-5 top-5 text-white/40"></i>
                             </div>
-
                             <div id="products-list" class="max-h-[420px] overflow-auto space-y-2 mb-8"></div>
-
                             <div class="flex items-end gap-6 border-t border-white/10 pt-8">
                                 <div>
                                     <div class="text-sm text-white/60 mb-2">Quantity</div>
@@ -191,12 +179,10 @@
                                         <button onclick="changeQty(1)" class="px-6 py-3 text-2xl hover:bg-white/10">+</button>
                                     </div>
                                 </div>
-
                                 <div>
                                     <div class="text-sm text-white/60 mb-2">Total Cost</div>
                                     <div id="total-cost" class="text-4xl font-bold text-white">0 ₡</div>
                                 </div>
-
                                 <button onclick="generateKeys()" class="flex-1 py-5 accent text-black font-semibold text-xl rounded-2xl">
                                     Generate Keys
                                 </button>
@@ -205,26 +191,17 @@
                     </div>
                 </div>
 
-                <!-- KEY STATUS CHECK TAB -->
+                <!-- Key Status Check -->
                 <div id="user-keycheck" class="hidden flex-1 p-10 overflow-auto">
                     <div class="max-w-3xl mx-auto">
                         <h2 class="text-3xl font-semibold mb-8">Key Status Check</h2>
-                        
                         <div class="glass border border-white/10 rounded-3xl p-12">
-                            <div class="mb-8">
-                                <label class="block text-sm text-white/70 mb-3">Enter your product key</label>
-                                <input id="keycheck-input" type="text" placeholder="XXXX-XXXX-XXXX-XXXX" 
-                                       class="w-full bg-zinc-900 border border-white/20 focus:border-white rounded-2xl px-6 py-5 text-lg outline-none">
-                            </div>
-                            
-                            <button onclick="checkKeyStatus()" 
-                                    class="w-full py-5 accent text-black font-semibold text-xl rounded-2xl">
+                            <input id="keycheck-input" type="text" placeholder="XXXX-XXXX-XXXX-XXXX" 
+                                   class="w-full bg-zinc-900 border border-white/20 focus:border-white rounded-2xl px-6 py-5 text-lg outline-none mb-6">
+                            <button onclick="checkKeyStatus()" class="w-full py-5 accent text-black font-semibold text-xl rounded-2xl">
                                 Check Key Status
                             </button>
-
-                            <div id="keycheck-result" class="mt-8 hidden">
-                                <!-- Result will appear here -->
-                            </div>
+                            <div id="keycheck-result" class="mt-8 hidden"></div>
                         </div>
                     </div>
                 </div>
@@ -233,7 +210,6 @@
                 <div id="user-orders" class="hidden flex-1 p-10 overflow-auto">
                     <div class="max-w-6xl mx-auto">
                         <h2 class="text-3xl font-semibold mb-8">My Orders</h2>
-                        
                         <div class="glass border border-white/10 rounded-3xl p-8">
                             <table class="w-full">
                                 <thead>
@@ -245,15 +221,7 @@
                                         <th class="py-4">Status</th>
                                     </tr>
                                 </thead>
-                                <tbody id="orders-table">
-                                    <tr>
-                                        <td class="py-4">#ORD-001</td>
-                                        <td class="py-4">HWID Spoofer Month</td>
-                                        <td class="py-4">$10</td>
-                                        <td class="py-4">2026-06-10</td>
-                                        <td class="py-4"><span class="px-3 py-1 bg-emerald-500/20 text-emerald-400 rounded-full text-xs">Active</span></td>
-                                    </tr>
-                                </tbody>
+                                <tbody id="orders-table"></tbody>
                             </table>
                         </div>
                     </div>
@@ -263,21 +231,8 @@
                 <div id="user-hwid" class="hidden flex-1 p-10 overflow-auto">
                     <div class="max-w-5xl mx-auto">
                         <h2 class="text-3xl font-semibold mb-8">HWID Resets</h2>
-                        
                         <div class="glass border border-white/10 rounded-3xl p-8">
-                            <div class="mb-6">
-                                <p class="text-white/70">You can reset your HWID once every 7 days per key.</p>
-                            </div>
-
-                            <div class="space-y-4" id="hwid-list">
-                                <div class="glass border border-white/10 p-6 rounded-2xl flex justify-between items-center">
-                                    <div>
-                                        <div class="font-medium">HWID Spoofer Month</div>
-                                        <div class="text-sm text-white/60">Key: XXXX-XXXX-XXXX</div>
-                                    </div>
-                                    <button onclick="resetHWID(this)" class="px-6 py-2 border border-white/70 hover:bg-white hover:text-black rounded-2xl text-sm">Reset HWID</button>
-                                </div>
-                            </div>
+                            <div class="space-y-4" id="hwid-list"></div>
                         </div>
                     </div>
                 </div>
@@ -297,13 +252,11 @@
                         <span class="text-4xl font-semibold tracking-tighter">Admin</span>
                     </div>
                 </div>
-                
                 <div class="flex-1 px-6 py-8 space-y-2 text-sm">
-                    <a onclick="showAdminSection('purchases')" class="block px-5 py-3 rounded-2xl hover:bg-white/5 cursor-pointer">Purchases / Logistics</a>
+                    <a onclick="showAdminSection('purchases')" class="block px-5 py-3 rounded-2xl hover:bg-white/5 cursor-pointer">Purchases</a>
                     <a onclick="showAdminSection('products')" class="block px-5 py-3 rounded-2xl hover:bg-white/5 cursor-pointer">Products</a>
                     <a onclick="showAdminSection('users')" class="block px-5 py-3 rounded-2xl hover:bg-white/5 cursor-pointer">Users</a>
                 </div>
-                
                 <div class="p-6 border-t border-white/10">
                     <button onclick="adminLogout()" class="w-full py-3 text-sm border border-white/30 hover:bg-white/5 rounded-2xl">Logout</button>
                 </div>
@@ -372,44 +325,48 @@
     </div>
 
     <script>
-        const API = 'https://zerox-backend-r5fr.onrender.com';
+        const API = 'https://zerox-backend-r5fr.onrender.com/api';
         let token = localStorage.getItem('token') || '';
         let products = [];
         let selectedProduct = null;
 
-        // ==================== LOGIN ====================
         async function login() {
-            const username = document.getElementById('username').value;
+            const username = document.getElementById('username').value.trim();
             const password = document.getElementById('password').value;
 
-            const res = await fetch(`${API}/login`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ username, password })
-            });
+            try {
+                const res = await fetch(`${API}/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password })
+                });
 
-            const data = await res.json();
+                const data = await res.json();
 
-            if (data.error) {
-                alert(data.error);
-                return;
-            }
+                if (data.error) {
+                    alert(data.error);
+                    return;
+                }
 
-            token = data.token;
-            localStorage.setItem('token', token);
-            localStorage.setItem('role', data.role);
-            localStorage.setItem('username', data.username);
+                token = data.token;
+                localStorage.setItem('token', token);
+                localStorage.setItem('role', data.role);
+                localStorage.setItem('username', data.username);
 
-            document.getElementById('login-page').classList.add('hidden');
+                document.getElementById('login-page').classList.add('hidden');
 
-            if (data.role === 'admin') {
-                document.getElementById('admin-panel').classList.remove('hidden');
-                showAdminSection('purchases');
-            } else {
-                document.getElementById('user-panel').classList.remove('hidden');
-                document.getElementById('user-username').textContent = data.username;
-                document.getElementById('sidebar-username').textContent = data.username;
-                loadUserData();
+                if (data.role === 'admin') {
+                    document.getElementById('admin-panel').classList.remove('hidden');
+                    showAdminSection('purchases');
+                } else {
+                    document.getElementById('user-panel').classList.remove('hidden');
+                    document.getElementById('user-username').textContent = data.username;
+                    document.getElementById('sidebar-username').textContent = data.username;
+                    loadUserData();
+                }
+            } catch (err) {
+                alert("Cannot connect to server. Please make sure the backend is running.");
+                console.error(err);
             }
         }
 
@@ -420,7 +377,6 @@
 
         function adminLogout() { logout(); }
 
-        // ==================== USER ====================
         async function loadUserData() {
             const res = await fetch(`${API}/me`, {
                 headers: { 'Authorization': `Bearer ${token}` }
@@ -464,21 +420,16 @@
             if (activeNav) activeNav.classList.add('active', 'bg-zinc-900');
         }
 
-        // ==================== KEY STATUS CHECK ====================
         function checkKeyStatus() {
             const key = document.getElementById('keycheck-input').value.trim();
             const resultDiv = document.getElementById('keycheck-result');
-
-            if (!key) {
-                alert("Please enter a key");
-                return;
-            }
+            if (!key) return alert("Please enter a key");
 
             resultDiv.classList.remove('hidden');
             resultDiv.innerHTML = `
                 <div class="p-6 bg-emerald-500/10 border border-emerald-500/30 rounded-2xl">
                     <div class="flex items-center gap-3">
-                        <i class="fas fa-check-circle text-emerald-400 text-2xl"></i>
+                        <i class="fas fa-check-circle text-emerald-400 text-3xl"></i>
                         <div>
                             <div class="font-semibold text-emerald-400">Key is Valid & Active</div>
                             <div class="text-sm text-white/70 mt-1">Expires in 27 days • HWID bound: Yes</div>
@@ -488,36 +439,27 @@
             `;
         }
 
-        // ==================== GENERATE KEYS ====================
         async function loadProductsForUser() {
             const res = await fetch(`${API}/products`);
             products = await res.json();
             renderUserProducts(products);
         }
 
-        function renderUserProducts(filteredProducts) {
+        function renderUserProducts(filtered) {
             const container = document.getElementById('products-list');
             container.innerHTML = '';
-
-            filteredProducts.forEach(product => {
+            filtered.forEach(p => {
                 const div = document.createElement('div');
                 div.className = 'glass border border-white/10 hover:border-white/30 p-5 rounded-2xl cursor-pointer flex justify-between items-center';
-                div.innerHTML = `
-                    <div class="font-medium">${product.name}</div>
-                    <div class="font-semibold">${product.price} ₡</div>
-                `;
-                div.onclick = () => {
-                    selectedProduct = product;
-                    updateTotal();
-                };
+                div.innerHTML = `<div class="font-medium">${p.name}</div><div class="font-semibold">${p.price} ₡</div>`;
+                div.onclick = () => { selectedProduct = p; updateTotal(); };
                 container.appendChild(div);
             });
         }
 
         function filterProducts() {
             const term = document.getElementById('search-products').value.toLowerCase();
-            const filtered = products.filter(p => p.name.toLowerCase().includes(term));
-            renderUserProducts(filtered);
+            renderUserProducts(products.filter(p => p.name.toLowerCase().includes(term)));
         }
 
         function updateTotal() {
@@ -527,26 +469,21 @@
         }
 
         function changeQty(delta) {
-            const qtyInput = document.getElementById('quantity');
-            let qty = parseInt(qtyInput.value) || 1;
+            const input = document.getElementById('quantity');
+            let qty = parseInt(input.value) || 1;
             qty = Math.max(1, qty + delta);
-            qtyInput.value = qty;
+            input.value = qty;
             updateTotal();
         }
 
-        async function generateKeys() {
-            if (!selectedProduct) {
-                alert("Please select a product first");
-                return;
-            }
+        function generateKeys() {
+            if (!selectedProduct) return alert("Please select a product first");
             const qty = parseInt(document.getElementById('quantity').value) || 1;
-            alert(`✅ Generated ${qty} key(s) for ${selectedProduct.name}`);
+            alert(`✅ Successfully generated ${qty} key(s) for ${selectedProduct.name}`);
         }
 
-        // ==================== ORDERS ====================
         function loadOrders() {
-            const tbody = document.getElementById('orders-table');
-            tbody.innerHTML = `
+            document.getElementById('orders-table').innerHTML = `
                 <tr>
                     <td class="py-4">#ORD-001</td>
                     <td class="py-4">HWID Spoofer Month</td>
@@ -557,10 +494,8 @@
             `;
         }
 
-        // ==================== HWID RESETS ====================
         function loadHWIDResets() {
-            const container = document.getElementById('hwid-list');
-            container.innerHTML = `
+            document.getElementById('hwid-list').innerHTML = `
                 <div class="glass border border-white/10 p-6 rounded-2xl flex justify-between items-center">
                     <div>
                         <div class="font-medium">HWID Spoofer Month</div>
@@ -571,136 +506,28 @@
             `;
         }
 
-        function resetHWID(button) {
-            button.disabled = true;
-            button.innerHTML = 'Resetting...';
-            
+        function resetHWID(btn) {
+            btn.disabled = true;
+            btn.textContent = "Resetting...";
             setTimeout(() => {
-                button.innerHTML = 'Reset Successful';
-                button.classList.add('!bg-emerald-500', '!text-black', '!border-emerald-500');
-                setTimeout(() => {
-                    alert("HWID has been reset successfully.");
-                }, 600);
+                btn.textContent = "Reset Successful";
+                btn.style.backgroundColor = "#10b981";
+                btn.style.color = "black";
             }, 1200);
         }
 
-        // ==================== ADMIN ====================
         async function showAdminSection(section) {
             document.querySelectorAll('.admin-section').forEach(el => el.classList.add('hidden'));
             document.getElementById('admin-' + section).classList.remove('hidden');
-
-            if (section === 'purchases') document.getElementById('purchases-table').innerHTML = `<tr><td colspan="5" class="py-8 text-center text-white/50">No purchases yet</td></tr>`;
-            if (section === 'products') await loadProducts();
-            if (section === 'users') await loadUsers();
         }
 
-        async function loadProducts() {
-            const res = await fetch(`${API}/products`);
-            const products = await res.json();
-            const tbody = document.getElementById('products-table');
-            tbody.innerHTML = '';
-            products.forEach(p => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td class="py-4">${p.name}</td>
-                    <td class="py-4">$${p.price}</td>
-                    <td class="py-4">
-                        <button onclick="editProduct(${p.id})" class="text-blue-400 hover:underline mr-4">Edit</button>
-                        <button onclick="deleteProduct(${p.id})" class="text-red-400 hover:underline">Delete</button>
-                    </td>
-                `;
-                tbody.appendChild(row);
-            });
-        }
-
-        async function loadUsers() {
-            const res = await fetch(`${API}/admin/users`, {
-                headers: { 'Authorization': `Bearer ${token}` }
-            });
-            const users = await res.json();
-            const tbody = document.getElementById('users-table');
-            tbody.innerHTML = '';
-            users.forEach(u => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td class="py-4">${u.username}</td>
-                    <td class="py-4">••••••</td>
-                    <td class="py-4"><span class="px-3 py-1 text-xs rounded-full ${u.role === 'admin' ? 'bg-red-500/20 text-red-400' : 'bg-blue-500/20 text-blue-400'}">${u.role}</span></td>
-                    <td class="py-4 font-semibold">${u.balance || 0} ₡</td>
-                    <td class="py-4">
-                        <button onclick="editUserBalance(${u.id})" class="text-emerald-400 hover:underline mr-3">Edit Balance</button>
-                    </td>
-                `;
-                tbody.appendChild(row);
-            });
-        }
-
-        async function editUserBalance(userId) {
-            const newBalance = prompt("Enter new balance:");
-            if (!newBalance) return;
-            await fetch(`${API}/admin/users/${userId}/balance`, {
-                method: 'PUT',
-                headers: { 
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                },
-                body: JSON.stringify({ balance: parseInt(newBalance) })
-            });
-            loadUsers();
-        }
-
-        function showAddProductModal() {
-            const name = prompt("Product Name:");
-            const price = prompt("Price:");
-            if (name && price) {
-                fetch(`${API}/admin/products`, {
-                    method: 'POST',
-                    headers: { 
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${token}`
-                    },
-                    body: JSON.stringify({ name, price: parseFloat(price) })
-                }).then(() => loadProducts());
-            }
-        }
-
-        async function editProduct(id) {
-            const name = prompt("New name:");
-            const price = prompt("New price:");
-            if (name && price) {
-                await fetch(`${API}/admin/products/${id}`, {
-                    method: 'PUT',
-                    headers: { 
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${token}`
-                    },
-                    body: JSON.stringify({ name, price: parseFloat(price) })
-                });
-                loadProducts();
-            }
-        }
-
-        async function deleteProduct(id) {
-            if (confirm("Delete this product?")) {
-                await fetch(`${API}/admin/products/${id}`, {
-                    method: 'DELETE',
-                    headers: { 'Authorization': `Bearer ${token}` }
-                });
-                loadProducts();
-            }
-        }
-
-        // Auto login
         window.onload = () => {
             if (token && localStorage.getItem('role')) {
                 const role = localStorage.getItem('role');
                 const username = localStorage.getItem('username');
-
                 document.getElementById('login-page').classList.add('hidden');
-
                 if (role === 'admin') {
                     document.getElementById('admin-panel').classList.remove('hidden');
-                    showAdminSection('purchases');
                 } else {
                     document.getElementById('user-panel').classList.remove('hidden');
                     document.getElementById('user-username').textContent = username;
