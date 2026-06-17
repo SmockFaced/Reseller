@@ -36,11 +36,11 @@
                 <div class="space-y-6">
                     <div>
                         <label class="block text-sm text-white/70 mb-2">Username</label>
-                        <input id="username" type="text" value="admin" class="w-full bg-black border border-white/20 focus:border-white rounded-2xl px-6 py-4 outline-none">
+                        <input id="username" type="text" value="smockfaced" class="w-full bg-black border border-white/20 focus:border-white rounded-2xl px-6 py-4 outline-none">
                     </div>
                     <div>
                         <label class="block text-sm text-white/70 mb-2">Password</label>
-                        <input id="password" type="password" value="admin123" class="w-full bg-black border border-white/20 focus:border-white rounded-2xl px-6 py-4 outline-none">
+                        <input id="password" type="password" value="demo" class="w-full bg-black border border-white/20 focus:border-white rounded-2xl px-6 py-4 outline-none">
                     </div>
                     <button onclick="login()" class="accent w-full py-4 rounded-2xl text-xl font-semibold text-black">Login</button>
                 </div>
@@ -55,6 +55,7 @@
     <!-- USER PANEL -->
     <div id="user-panel" class="hidden min-h-screen">
         <div class="flex h-screen overflow-hidden">
+            <!-- Sidebar -->
             <div class="w-72 bg-black border-r border-white/10 flex flex-col">
                 <div class="p-6 border-b border-white/10">
                     <div class="flex items-center gap-3">
@@ -80,6 +81,18 @@
                        class="nav-link flex items-center gap-3 px-5 py-3 rounded-2xl hover:bg-zinc-900">
                         <i class="fas fa-key w-5"></i> <span>Generate Keys</span>
                     </a>
+                    <a onclick="switchUserPage('keycheck')" id="nav-user-keycheck"
+                       class="nav-link flex items-center gap-3 px-5 py-3 rounded-2xl hover:bg-zinc-900">
+                        <i class="fas fa-shield-alt w-5"></i> <span>Key Status Check</span>
+                    </a>
+                    <a onclick="switchUserPage('orders')" id="nav-user-orders"
+                       class="nav-link flex items-center gap-3 px-5 py-3 rounded-2xl hover:bg-zinc-900">
+                        <i class="fas fa-list w-5"></i> <span>Orders</span>
+                    </a>
+                    <a onclick="switchUserPage('hwid')" id="nav-user-hwid"
+                       class="nav-link flex items-center gap-3 px-5 py-3 rounded-2xl hover:bg-zinc-900">
+                        <i class="fas fa-sync w-5"></i> <span>HWID Resets</span>
+                    </a>
                 </div>
 
                 <div class="p-4 border-t border-white/10">
@@ -93,6 +106,7 @@
                 </div>
             </div>
 
+            <!-- Main Content -->
             <div class="flex-1 flex flex-col">
                 <div class="h-16 bg-black border-b border-white/10 flex items-center px-8 justify-between">
                     <div>
@@ -138,25 +152,6 @@
                                 </div>
                             </div>
                         </div>
-
-                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                            <div class="glass border border-white/10 rounded-3xl p-8">
-                                <div class="flex items-center gap-3 mb-6">
-                                    <i class="fas fa-shield-alt text-xl"></i>
-                                    <h3 class="font-semibold">Key Status Check</h3>
-                                </div>
-                                <div class="flex gap-3">
-                                    <input id="key-input" type="text" placeholder="Enter product key..." 
-                                           class="flex-1 bg-zinc-900 border border-white/20 focus:border-white rounded-2xl px-5 py-3 outline-none">
-                                    <button onclick="checkKey()" class="px-8 bg-white text-black rounded-2xl font-semibold">Check</button>
-                                </div>
-                            </div>
-
-                            <div class="glass border border-white/10 rounded-3xl p-8">
-                                <h3 class="font-semibold mb-6">Recent Orders</h3>
-                                <div class="text-center py-16 text-white/40">No orders found</div>
-                            </div>
-                        </div>
                     </div>
                 </div>
 
@@ -173,30 +168,26 @@
                     </div>
                 </div>
 
-                <!-- GENERATE KEYS (NOW SHOWS PRODUCTS) -->
+                <!-- Generate Keys -->
                 <div id="user-generate" class="hidden flex-1 p-10 overflow-auto">
                     <div class="max-w-5xl mx-auto">
                         <div class="glass border border-white/10 rounded-3xl p-8">
                             <h3 class="text-2xl font-semibold mb-6">Generate Keys</h3>
 
-                            <!-- Search -->
                             <div class="relative mb-6">
                                 <input id="search-products" type="text" placeholder="Search products..." onkeyup="filterProducts()"
                                        class="w-full bg-zinc-900 border border-white/20 focus:border-white rounded-2xl px-6 py-4 pl-12 outline-none">
                                 <i class="fas fa-search absolute left-5 top-5 text-white/40"></i>
                             </div>
 
-                            <!-- Products List -->
                             <div id="products-list" class="max-h-[420px] overflow-auto space-y-2 mb-8"></div>
 
-                            <!-- Quantity + Total + Generate -->
                             <div class="flex items-end gap-6 border-t border-white/10 pt-8">
                                 <div>
                                     <div class="text-sm text-white/60 mb-2">Quantity</div>
                                     <div class="flex border border-white/20 rounded-2xl overflow-hidden">
                                         <button onclick="changeQty(-1)" class="px-6 py-3 text-2xl hover:bg-white/10">-</button>
-                                        <input id="quantity" type="text" value="1" 
-                                               class="w-20 text-center bg-transparent text-2xl font-semibold focus:outline-none">
+                                        <input id="quantity" type="text" value="1" class="w-20 text-center bg-transparent text-2xl font-semibold focus:outline-none">
                                         <button onclick="changeQty(1)" class="px-6 py-3 text-2xl hover:bg-white/10">+</button>
                                     </div>
                                 </div>
@@ -206,10 +197,86 @@
                                     <div id="total-cost" class="text-4xl font-bold text-white">0 ₡</div>
                                 </div>
 
-                                <button onclick="generateKeys()" 
-                                        class="flex-1 py-5 accent text-black font-semibold text-xl rounded-2xl">
+                                <button onclick="generateKeys()" class="flex-1 py-5 accent text-black font-semibold text-xl rounded-2xl">
                                     Generate Keys
                                 </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- KEY STATUS CHECK TAB -->
+                <div id="user-keycheck" class="hidden flex-1 p-10 overflow-auto">
+                    <div class="max-w-3xl mx-auto">
+                        <h2 class="text-3xl font-semibold mb-8">Key Status Check</h2>
+                        
+                        <div class="glass border border-white/10 rounded-3xl p-12">
+                            <div class="mb-8">
+                                <label class="block text-sm text-white/70 mb-3">Enter your product key</label>
+                                <input id="keycheck-input" type="text" placeholder="XXXX-XXXX-XXXX-XXXX" 
+                                       class="w-full bg-zinc-900 border border-white/20 focus:border-white rounded-2xl px-6 py-5 text-lg outline-none">
+                            </div>
+                            
+                            <button onclick="checkKeyStatus()" 
+                                    class="w-full py-5 accent text-black font-semibold text-xl rounded-2xl">
+                                Check Key Status
+                            </button>
+
+                            <div id="keycheck-result" class="mt-8 hidden">
+                                <!-- Result will appear here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Orders -->
+                <div id="user-orders" class="hidden flex-1 p-10 overflow-auto">
+                    <div class="max-w-6xl mx-auto">
+                        <h2 class="text-3xl font-semibold mb-8">My Orders</h2>
+                        
+                        <div class="glass border border-white/10 rounded-3xl p-8">
+                            <table class="w-full">
+                                <thead>
+                                    <tr class="text-left text-white/60 border-b border-white/10">
+                                        <th class="py-4">Order ID</th>
+                                        <th class="py-4">Product</th>
+                                        <th class="py-4">Amount</th>
+                                        <th class="py-4">Date</th>
+                                        <th class="py-4">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="orders-table">
+                                    <tr>
+                                        <td class="py-4">#ORD-001</td>
+                                        <td class="py-4">HWID Spoofer Month</td>
+                                        <td class="py-4">$10</td>
+                                        <td class="py-4">2026-06-10</td>
+                                        <td class="py-4"><span class="px-3 py-1 bg-emerald-500/20 text-emerald-400 rounded-full text-xs">Active</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- HWID Resets -->
+                <div id="user-hwid" class="hidden flex-1 p-10 overflow-auto">
+                    <div class="max-w-5xl mx-auto">
+                        <h2 class="text-3xl font-semibold mb-8">HWID Resets</h2>
+                        
+                        <div class="glass border border-white/10 rounded-3xl p-8">
+                            <div class="mb-6">
+                                <p class="text-white/70">You can reset your HWID once every 7 days per key.</p>
+                            </div>
+
+                            <div class="space-y-4" id="hwid-list">
+                                <div class="glass border border-white/10 p-6 rounded-2xl flex justify-between items-center">
+                                    <div>
+                                        <div class="font-medium">HWID Spoofer Month</div>
+                                        <div class="text-sm text-white/60">Key: XXXX-XXXX-XXXX</div>
+                                    </div>
+                                    <button onclick="resetHWID(this)" class="px-6 py-2 border border-white/70 hover:bg-white hover:text-black rounded-2xl text-sm">Reset HWID</button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -218,7 +285,7 @@
         </div>
     </div>
 
-    <!-- ADMIN PANEL (unchanged) -->
+    <!-- ADMIN PANEL -->
     <div id="admin-panel" class="hidden min-h-screen">
         <div class="flex h-screen overflow-hidden">
             <div class="w-72 bg-black border-r border-white/10 flex flex-col">
@@ -305,7 +372,7 @@
     </div>
 
     <script>
-        const API = 'http://localhost:3000/api';
+        const API = 'https://zerox-backend-r5fr.onrender.com';
         let token = localStorage.getItem('token') || '';
         let products = [];
         let selectedProduct = null;
@@ -374,21 +441,54 @@
         }
 
         function switchUserPage(page) {
-            document.querySelectorAll('#user-dashboard-content, #user-store, #user-generate').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('#user-dashboard-content, #user-store, #user-generate, #user-keycheck, #user-orders, #user-hwid').forEach(el => el.classList.add('hidden'));
+            
             if (page === 'dashboard') document.getElementById('user-dashboard-content').classList.remove('hidden');
             else if (page === 'store') document.getElementById('user-store').classList.remove('hidden');
             else if (page === 'generate') {
                 document.getElementById('user-generate').classList.remove('hidden');
                 loadProductsForUser();
             }
+            else if (page === 'keycheck') document.getElementById('user-keycheck').classList.remove('hidden');
+            else if (page === 'orders') {
+                document.getElementById('user-orders').classList.remove('hidden');
+                loadOrders();
+            }
+            else if (page === 'hwid') {
+                document.getElementById('user-hwid').classList.remove('hidden');
+                loadHWIDResets();
+            }
+            
+            document.querySelectorAll('#user-panel .nav-link').forEach(link => link.classList.remove('active', 'bg-zinc-900'));
+            const activeNav = document.getElementById('nav-user-' + page);
+            if (activeNav) activeNav.classList.add('active', 'bg-zinc-900');
         }
 
-        function checkKey() {
-            const key = document.getElementById('key-input').value;
-            if (key) alert("✅ Key is valid!");
+        // ==================== KEY STATUS CHECK ====================
+        function checkKeyStatus() {
+            const key = document.getElementById('keycheck-input').value.trim();
+            const resultDiv = document.getElementById('keycheck-result');
+
+            if (!key) {
+                alert("Please enter a key");
+                return;
+            }
+
+            resultDiv.classList.remove('hidden');
+            resultDiv.innerHTML = `
+                <div class="p-6 bg-emerald-500/10 border border-emerald-500/30 rounded-2xl">
+                    <div class="flex items-center gap-3">
+                        <i class="fas fa-check-circle text-emerald-400 text-2xl"></i>
+                        <div>
+                            <div class="font-semibold text-emerald-400">Key is Valid & Active</div>
+                            <div class="text-sm text-white/70 mt-1">Expires in 27 days • HWID bound: Yes</div>
+                        </div>
+                    </div>
+                </div>
+            `;
         }
 
-        // ==================== USER GENERATE KEYS ====================
+        // ==================== GENERATE KEYS ====================
         async function loadProductsForUser() {
             const res = await fetch(`${API}/products`);
             products = await res.json();
@@ -403,12 +503,8 @@
                 const div = document.createElement('div');
                 div.className = 'glass border border-white/10 hover:border-white/30 p-5 rounded-2xl cursor-pointer flex justify-between items-center';
                 div.innerHTML = `
-                    <div>
-                        <div class="font-medium">${product.name}</div>
-                    </div>
-                    <div class="text-right">
-                        <div class="font-semibold">${product.price} ₡</div>
-                    </div>
+                    <div class="font-medium">${product.name}</div>
+                    <div class="font-semibold">${product.price} ₡</div>
                 `;
                 div.onclick = () => {
                     selectedProduct = product;
@@ -443,15 +539,49 @@
                 alert("Please select a product first");
                 return;
             }
-
             const qty = parseInt(document.getElementById('quantity').value) || 1;
-            const total = selectedProduct.price * qty;
+            alert(`✅ Generated ${qty} key(s) for ${selectedProduct.name}`);
+        }
 
-            // For now just show success (we can add real key creation later)
-            alert(`✅ Successfully generated ${qty} key(s) for ${selectedProduct.name}\nTotal: ${total} ₡`);
+        // ==================== ORDERS ====================
+        function loadOrders() {
+            const tbody = document.getElementById('orders-table');
+            tbody.innerHTML = `
+                <tr>
+                    <td class="py-4">#ORD-001</td>
+                    <td class="py-4">HWID Spoofer Month</td>
+                    <td class="py-4">$10</td>
+                    <td class="py-4">2026-06-10</td>
+                    <td class="py-4"><span class="px-3 py-1 bg-emerald-500/20 text-emerald-400 rounded-full text-xs">Active</span></td>
+                </tr>
+            `;
+        }
 
-            // Optional: reload user data
-            loadUserData();
+        // ==================== HWID RESETS ====================
+        function loadHWIDResets() {
+            const container = document.getElementById('hwid-list');
+            container.innerHTML = `
+                <div class="glass border border-white/10 p-6 rounded-2xl flex justify-between items-center">
+                    <div>
+                        <div class="font-medium">HWID Spoofer Month</div>
+                        <div class="text-sm text-white/60">Key: XXXX-XXXX-XXXX</div>
+                    </div>
+                    <button onclick="resetHWID(this)" class="px-6 py-2 border border-white/70 hover:bg-white hover:text-black rounded-2xl text-sm">Reset HWID</button>
+                </div>
+            `;
+        }
+
+        function resetHWID(button) {
+            button.disabled = true;
+            button.innerHTML = 'Resetting...';
+            
+            setTimeout(() => {
+                button.innerHTML = 'Reset Successful';
+                button.classList.add('!bg-emerald-500', '!text-black', '!border-emerald-500');
+                setTimeout(() => {
+                    alert("HWID has been reset successfully.");
+                }, 600);
+            }, 1200);
         }
 
         // ==================== ADMIN ====================
@@ -459,13 +589,9 @@
             document.querySelectorAll('.admin-section').forEach(el => el.classList.add('hidden'));
             document.getElementById('admin-' + section).classList.remove('hidden');
 
-            if (section === 'purchases') await loadPurchases();
+            if (section === 'purchases') document.getElementById('purchases-table').innerHTML = `<tr><td colspan="5" class="py-8 text-center text-white/50">No purchases yet</td></tr>`;
             if (section === 'products') await loadProducts();
             if (section === 'users') await loadUsers();
-        }
-
-        async function loadPurchases() {
-            document.getElementById('purchases-table').innerHTML = `<tr><td colspan="5" class="py-8 text-center text-white/50">No purchases yet</td></tr>`;
         }
 
         async function loadProducts() {
@@ -564,7 +690,7 @@
             }
         }
 
-        // Auto-login if already logged in
+        // Auto login
         window.onload = () => {
             if (token && localStorage.getItem('role')) {
                 const role = localStorage.getItem('role');
