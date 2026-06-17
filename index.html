@@ -15,10 +15,10 @@
         .nav-link.active { background-color: #27272a; }
         
         .modal {
-            animation: modalPop 0.3s ease;
+            animation: modalPop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
         @keyframes modalPop {
-            from { opacity: 0; transform: scale(0.9); }
+            from { opacity: 0; transform: scale(0.7); }
             to { opacity: 1; transform: scale(1); }
         }
     </style>
@@ -29,9 +29,15 @@
     <div id="custom-modal" class="hidden fixed inset-0 bg-black/80 flex items-center justify-center z-50">
         <div class="glass border border-white/20 rounded-3xl p-8 w-full max-w-md modal">
             <div id="modal-icon" class="text-5xl mb-4"></div>
-            <div id="modal-title" class="text-2xl font-semibold mb-3"></div>
-            <div id="modal-message" class="text-white/80 mb-8"></div>
-            <button onclick="closeModal()" class="w-full py-4 bg-white text-black font-semibold rounded-2xl">OK</button>
+            <div id="modal-title" class="text-2xl font-semibold mb-2"></div>
+            <div id="modal-message" class="text-white/80 mb-6"></div>
+            
+            <input id="modal-input" type="text" class="hidden w-full bg-black border border-white/20 focus:border-white rounded-2xl px-5 py-4 outline-none mb-6">
+            
+            <div class="flex gap-3">
+                <button onclick="closeModal()" class="flex-1 py-4 bg-zinc-800 hover:bg-zinc-700 rounded-2xl font-semibold">Cancel</button>
+                <button onclick="confirmModal()" id="modal-confirm-btn" class="flex-1 py-4 bg-white text-black rounded-2xl font-semibold">OK</button>
+            </div>
         </div>
     </div>
 
@@ -295,31 +301,50 @@
         let token = localStorage.getItem('token') || '';
         let products = [];
         let selectedProduct = null;
+        let currentCallback = null;
 
-        // Custom Modal
-        function showModal(message, type = 'success') {
+        // Custom Modal Functions
+        function showPrompt(title, message, defaultValue = "", callback) {
+            currentCallback = callback;
             const modal = document.getElementById('custom-modal');
-            const icon = document.getElementById('modal-icon');
-            const title = document.getElementById('modal-title');
-            const msg = document.getElementById('modal-message');
+            const input = document.getElementById('modal-input');
+            
+            document.getElementById('modal-icon').innerHTML = '✏️';
+            document.getElementById('modal-title').textContent = title;
+            document.getElementById('modal-message').textContent = message;
+            
+            input.value = defaultValue;
+            input.classList.remove('hidden');
+            modal.classList.remove('hidden');
+            input.focus();
+        }
 
-            if (type === 'success') {
-                icon.innerHTML = '✅';
-                title.textContent = 'Success';
-                title.className = 'text-2xl font-semibold mb-3 text-emerald-400';
-            } else {
-                icon.innerHTML = '❌';
-                title.textContent = 'Error';
-                title.className = 'text-2xl font-semibold mb-3 text-red-400';
-            }
-            msg.textContent = message;
+        function showMessage(message, type = 'success') {
+            const modal = document.getElementById('custom-modal');
+            const input = document.getElementById('modal-input');
+            
+            document.getElementById('modal-icon').innerHTML = type === 'success' ? '✅' : '❌';
+            document.getElementById('modal-title').textContent = type === 'success' ? 'Success' : 'Error';
+            document.getElementById('modal-title').className = type === 'success' ? 'text-2xl font-semibold mb-3 text-emerald-400' : 'text-2xl font-semibold mb-3 text-red-400';
+            document.getElementById('modal-message').textContent = message;
+            
+            input.classList.add('hidden');
             modal.classList.remove('hidden');
         }
 
         function closeModal() {
             document.getElementById('custom-modal').classList.add('hidden');
+            document.getElementById('modal-input').classList.add('hidden');
+            currentCallback = null;
         }
 
+        function confirmModal() {
+            const value = document.getElementById('modal-input').value;
+            if (currentCallback) currentCallback(value);
+            closeModal();
+        }
+
+        // Login
         async function login() {
             const username = document.getElementById('username').value.trim();
             const password = document.getElementById('password').value;
@@ -334,7 +359,7 @@
                 const data = await res.json();
 
                 if (data.error) {
-                    showModal(data.error, 'error');
+                    showMessage(data.error, 'error');
                     return;
                 }
 
@@ -355,7 +380,7 @@
                     loadUserData();
                 }
             } catch (err) {
-                showModal("Cannot connect to server. Backend may be down.", 'error');
+                showMessage("Cannot connect to server.", 'error');
             }
         }
 
@@ -379,7 +404,7 @@
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             const data = await res.json();
-            showModal(data.message, 'success');
+            showMessage(data.message, 'success');
             loadUserData();
         }
 
@@ -394,11 +419,11 @@
 
         function checkKeyStatus() {
             const key = document.getElementById('keycheck-input').value.trim();
-            if (!key) return showModal("Please enter a key", 'error');
-            showModal("Key is valid and active", 'success');
+            if (!key) return showMessage("Please enter a key", 'error');
+            showMessage("Key is valid and active", 'success');
         }
 
-        // Generate Keys, Orders, HWID functions remain the same as previous
+        // Generate Keys functions
         async function loadProductsForUser() {
             const res = await fetch(`${API}/products`);
             products = await res.json();
@@ -437,9 +462,9 @@
         }
 
         function generateKeys() {
-            if (!selectedProduct) return showModal("Please select a product first", 'error');
+            if (!selectedProduct) return showMessage("Please select a product first", 'error');
             const qty = parseInt(document.getElementById('quantity').value) || 1;
-            showModal(`Successfully generated ${qty} key(s) for ${selectedProduct.name}`, 'success');
+            showMessage(`Successfully generated ${qty} key(s) for ${selectedProduct.name}`, 'success');
         }
 
         function loadOrders() {
@@ -465,7 +490,7 @@
                 btn.textContent = "Reset Successful";
                 btn.style.backgroundColor = "#10b981";
                 btn.style.color = "black";
-                showModal("HWID has been reset successfully.", 'success');
+                showMessage("HWID has been reset successfully.", 'success');
             }, 1200);
         }
 
@@ -516,27 +541,29 @@
         }
 
         function showAddUserModal() {
-            const username = prompt("New username:");
-            const password = prompt("Password:");
-            if (username && password) {
-                fetch(`${API}/admin/users`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
-                    body: JSON.stringify({ username, password })
-                }).then(() => loadUsers());
-            }
+            showPrompt("Add New User", "Enter username:", "", (username) => {
+                if (!username) return;
+                const password = prompt("Enter password for " + username);
+                if (password) {
+                    fetch(`${API}/admin/users`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+                        body: JSON.stringify({ username, password })
+                    }).then(() => loadUsers());
+                }
+            });
         }
 
         function editUser(userId) {
-            const username = prompt("New username:");
-            const password = prompt("New password (leave blank to keep):");
-            if (username) {
+            showPrompt("Edit Username", "New username:", "", (newUsername) => {
+                if (!newUsername) return;
+                const newPassword = prompt("New password (leave blank to keep):");
                 fetch(`${API}/admin/users/${userId}`, {
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
-                    body: JSON.stringify({ username, password: password || undefined })
+                    body: JSON.stringify({ username: newUsername, password: newPassword || undefined })
                 }).then(() => loadUsers());
-            }
+            });
         }
 
         window.onload = () => {
